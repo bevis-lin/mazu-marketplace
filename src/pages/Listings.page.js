@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "semantic-ui-react";
 import useSentimens from "../hooks/use-sentimens.hook";
 import SentimenList from "../components/SentimenList";
 import ErrorLoadingRenderer from "../components/ErrorLoadingRenderer";

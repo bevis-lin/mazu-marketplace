@@ -1,6 +1,6 @@
-import { query, tx } from "@onflow/fcl";
+import { query } from "@onflow/fcl";
 import { useEffect, useReducer } from "react";
-import { LIST_SENTIMENS } from "../flow/list-sentimens.script";
+import { GET_LISTINGS } from "../flow/get-listings.script";
 import { defaultReducer } from "../reducer/defaultReducer";
 import SentimenClass from "../utils/SentimenClass";
 
@@ -17,7 +17,7 @@ export default function useSentimens() {
 
       try {
         const res = await query({
-          cadence: LIST_SENTIMENS,
+          cadence: GET_LISTINGS,
           args: (arg, t) => [arg(0, t.Int), arg(10, t.Int)],
         });
 
@@ -25,13 +25,7 @@ export default function useSentimens() {
 
         console.log(res);
         res.displayItems.forEach((element) => {
-          let sentimen = new SentimenClass(
-            element.metadata.cardID,
-            element.metadata.name,
-            element.metadata.description,
-            element.metadata.imageUrl,
-            element.metadata.data.activity
-          );
+          let sentimen = SentimenClass.SentimenFactory(element);
           mappedSentimens.push(sentimen);
         });
 
