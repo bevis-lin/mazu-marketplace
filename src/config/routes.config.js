@@ -1,9 +1,16 @@
 import Home from "../pages/Home.page";
+import HomepageLayout from "../pages/HomePageLayout.page";
 import Listings from "../pages/Listings.page";
 import Listing from "../pages/Listing.page";
 
 export const ROUTES = [
-  { name: "Home", path: "/", component: Home, nav: false },
+  { name: "Home", path: "/", component: HomepageLayout, nav: false },
+  {
+    name: "ActivityListings",
+    path: "/activity/:activityID/listings",
+    component: Listings,
+    nav: false,
+  },
   { name: "Listings", path: "/listings", component: Listings, nav: false },
   {
     name: "Listing",
