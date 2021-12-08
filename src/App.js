@@ -7,6 +7,7 @@ import { ROUTES } from "./config/routes.config";
 export default function App() {
   return (
     <Providers>
+      <Header />
       <Routes routes={ROUTES} />
     </Providers>
   );
