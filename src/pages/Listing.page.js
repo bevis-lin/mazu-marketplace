@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
-import { query } from "@onflow/fcl";
-import { useParams } from "react-router";
-import { GET_LISTING } from "../flow/get-listing.script";
-import SentimenClass from "../utils/SentimenClass";
+import React, { useEffect, useState } from 'react';
+import { query } from '@onflow/fcl';
+import { useParams } from 'react-router';
+import { GET_LISTING } from '../flow/get-listing.script';
+import SentimenClass from '../utils/SentimenClass';
 
 export default function Listing() {
   const [sentimen, setSentimen] = useState([]);

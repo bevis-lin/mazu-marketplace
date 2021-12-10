@@ -1,33 +1,30 @@
-import React, { Component } from "react";
-import { Menu } from "semantic-ui-react";
+import React from 'react';
+import { Menu } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
 
-export default class Header extends Component {
-  state = {};
+export default function Header() {
+  const history = useHistory();
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  return (
+    <Menu inverted>
+      <Menu.Item
+        header
+        onClick={() => {
+          history.push('/');
+        }}
+      >
+        媽祖印象 NFT
+      </Menu.Item>
+      <Menu.Item onClick={() => history.push('/activity/1/listings')}>
+        北港
+      </Menu.Item>
 
-  render() {
-    const { activeItem } = this.state;
-
-    return (
-      <Menu>
-        <Menu.Item header>Mazu NFT</Menu.Item>
-        <Menu.Item
-          name="aboutUs"
-          active={activeItem === "aboutUs"}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name="roadmaps"
-          active={activeItem === "roadmaps"}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name="faq"
-          active={activeItem === "faq"}
-          onClick={this.handleItemClick}
-        />
-      </Menu>
-    );
-  }
+      <Menu.Menu position="right">
+        <Menu.Item onClick={() => history.push('/user/collection')}>
+          我的收藏
+        </Menu.Item>
+        <Menu.Item>連結錢包</Menu.Item>
+      </Menu.Menu>
+    </Menu>
+  );
 }
