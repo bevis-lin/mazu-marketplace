@@ -5,9 +5,40 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  background: black;
+  background: -webkit-linear-gradient(to right, black, black);
+  background: linear-gradient(to right, black, black);
+  overflow-x: hidden;
+  font-family: 'Acumin Regular';
+  color: black;
+  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.app {
+  text-align: center;
+  background: black;
+  background: -webkit-linear-gradient(to right, black, black);
+  background: linear-gradient(to right, black, black);
+}
+
+.app__title {
+  font-family: 'Monument Bold';
+  color: rgb(15, 14, 14);
+  font-size: 3.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.app__subtitle {
+  font-family: 'Monument Light';
+}
+
+.highlight {
+  color: rgb(14, 14, 13);
 }

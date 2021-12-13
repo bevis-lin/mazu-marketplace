@@ -1,13 +1,13 @@
-import React from "react";
-import Header from "./components/Header";
-import Providers from "./providers/Providers.comp";
-import Routes from "./components/Routes.comp";
-import { ROUTES } from "./config/routes.config";
+import React from 'react';
+import Providers from './providers/Providers.comp';
+import Routes from './components/Routes.comp';
+import { ROUTES } from './config/routes.config';
+import Navbar from './components/Navbar';
 
 export default function App() {
   return (
     <Providers>
-      <Header />
+      <Navbar />
       <Routes routes={ROUTES} />
     </Providers>
   );

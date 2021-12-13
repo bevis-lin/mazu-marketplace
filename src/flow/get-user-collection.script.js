@@ -1,6 +1,6 @@
 export const GET_USER_COLLECTION = `
-import Sentimen from 0xf8d6e0586b0a20c7
-import SentimenMetadata from 0xf8d6e0586b0a20c7
+import Sentimen from 0xSentimen
+import SentimenMetadata from 0xMetadata
 
 
 pub fun main(addr: Address): Result {

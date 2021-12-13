@@ -1,7 +1,7 @@
 export const GET_LISTINGS = `
-import NFTStorefront from 0xf8d6e0586b0a20c7
-import Marketplace from 0xf8d6e0586b0a20c7
-import SentimenMetadata from 0xf8d6e0586b0a20c7
+import NFTStorefront from 0xNFTStorefront
+import Marketplace from 0xMarketplace
+import SentimenMetadata from 0xMetadata
 
 pub fun main(offset: Int, limit: Int): DipslayResult {
     var listingIds: [UInt64] = Marketplace.getListingIDs()
