@@ -1,20 +1,27 @@
 import React from 'react';
 import Sentimen from './Sentimen';
-import { Divider, Grid } from 'semantic-ui-react';
+import { Card, Container } from 'semantic-ui-react';
 
-export default function SentimenList({ sentimes }) {
+export default function SentimenList({ sentimes, owned }) {
   console.log(sentimes);
 
   const getSentimenList = (sentimens) => {
-    return sentimes.map((sentimen, i) => (
+    return sentimens.map((sentimen, i) => (
       <Sentimen key={i} sentimen={sentimen} />
     ));
   };
 
-  return (
-    <div>
-      <Divider hidden />
-      <Grid>{getSentimenList(sentimes)}</Grid>
-    </div>
-  );
+  if (owned) {
+    return (
+      <Container>
+        <Card.Group itemsPerRow={3}>{getSentimenList(sentimes)}</Card.Group>
+      </Container>
+    );
+  } else {
+    return (
+      <Container textAlign="center">
+        <Card.Group itemsPerRow={3}>{getSentimenList(sentimes)}</Card.Group>
+      </Container>
+    );
+  }
 }

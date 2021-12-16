@@ -7,7 +7,8 @@ class SentimenClass {
     imageURL,
     activity,
     creator,
-    salePrice
+    salePrice,
+    listingAddress
   ) {
     this.listingID = listingID;
     this.id = id;
@@ -17,6 +18,7 @@ class SentimenClass {
     this.activity = activity;
     this.creator = creator;
     this.salePrice = salePrice;
+    this.listingAddress = listingAddress;
   }
 
   get type() {
@@ -32,7 +34,8 @@ class SentimenClass {
       element.metadata.imageUrl,
       element.metadata.data.activity,
       element.metadata.data.creator,
-      element.salePrice
+      element.salePrice,
+      element.address
     );
     return sentimenInstance;
   }
@@ -45,7 +48,8 @@ class SentimenClass {
       element.description,
       element.imageUrl,
       element.data.activity,
-      element.data.creator
+      element.data.creator,
+      ''
     );
     return sentimenInstance;
   }

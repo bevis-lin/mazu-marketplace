@@ -15,7 +15,7 @@ export default function Wallet() {
   }, []);
 
   return (
-    <Dropdown item simple text="錢包">
+    <Dropdown item pointing text="錢包">
       {!balance ? (
         <div></div>
       ) : (

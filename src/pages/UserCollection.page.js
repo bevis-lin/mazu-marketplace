@@ -1,15 +1,24 @@
 import React from 'react';
-import useUserSentimens from '../hooks/use-user-sentimens.hook';
+import { useUser } from '../providers/UserProvider';
 import SentimenList from '../components/SentimenList';
-import ErrorLoadingRenderer from '../components/ErrorLoadingRenderer';
 import '../config/config';
+import { Button } from 'semantic-ui-react';
 
 export default function UserCollection() {
-  const { loading, error, data: sentimens } = useUserSentimens();
+  const { userSentimens, hasCollection, createCollection } = useUser();
 
   return (
-    <ErrorLoadingRenderer loading={loading} error={error}>
-      <SentimenList sentimes={sentimens} />
-    </ErrorLoadingRenderer>
+    <div>
+      <br />
+      <br />
+      <br />
+      {!hasCollection ? (
+        <Button inverted color="grey" onClick={() => createCollection()}>
+          Enable Collection
+        </Button>
+      ) : (
+        <SentimenList sentimes={userSentimens} owned={true} />
+      )}
+    </div>
   );
 }
