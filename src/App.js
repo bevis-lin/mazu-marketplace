@@ -3,7 +3,6 @@ import Providers from './providers/Providers.comp';
 import Routes from './components/Routes.comp';
 import { ROUTES } from './config/routes.config';
 import Navbar from './components/Navbar';
-import Bottom from './components/Bottom';
 
 export default function App() {
   return (
@@ -16,7 +15,6 @@ export default function App() {
       <Routes routes={ROUTES} />
       <br />
       <br />
-      <Bottom />
     </Providers>
   );
 }
