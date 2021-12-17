@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../providers/AuthProvider';
 import { useUser } from '../providers/UserProvider';
-import { Dropdown, Menu } from 'semantic-ui-react';
+import { Dropdown, Icon, Menu } from 'semantic-ui-react';
 
 export default function Wallet() {
   const { user, logOut } = useAuth();
@@ -23,7 +23,8 @@ export default function Wallet() {
           <Dropdown.Item>👛 {user?.addr}</Dropdown.Item>
           <Dropdown.Item>💰 FLOW: {balance.slice(0, -6)}</Dropdown.Item>
           <Dropdown.Item onClick={() => history.push('/user/collection')}>
-            Owned NFTs
+            <Icon name="box" />
+            Collection
           </Dropdown.Item>
           <Dropdown.Item onClick={() => logOut()}>👋 Logout</Dropdown.Item>
         </Dropdown.Menu>

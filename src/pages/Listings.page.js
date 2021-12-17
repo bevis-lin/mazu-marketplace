@@ -9,9 +9,6 @@ export default function Listings() {
 
   return (
     <ErrorLoadingRenderer loading={loading} error={error}>
-      <br />
-      <br />
-      <br />
       <SentimenList sentimes={sentimens} owned={false} />
     </ErrorLoadingRenderer>
   );

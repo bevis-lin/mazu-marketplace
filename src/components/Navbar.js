@@ -13,7 +13,7 @@ export default function Navbar() {
   );
 
   return (
-    <Menu fixed="top" inverted>
+    <Menu fixed="top" inverted size="huge">
       <Menu.Item as="a" header onClick={() => history.push('/')}>
         {/* <Image
           size="mini"
