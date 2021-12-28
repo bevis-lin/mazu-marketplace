@@ -9,7 +9,7 @@ export default function Listings() {
 
   return (
     <ErrorLoadingRenderer loading={loading} error={error}>
-      <SentimenList sentimes={sentimens} owned={false} />
+      <SentimenList sentimens={sentimens} />
     </ErrorLoadingRenderer>
   );
 }

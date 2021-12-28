@@ -17,7 +17,7 @@ export default function UserCollection() {
         <Segment inverted>
           <Header size="huge">Your collected NFTs</Header>
           <Divider />
-          <SentimenList sentimes={userSentimens} owned={true} />
+          <SentimenList sentimens={userSentimens} />
         </Segment>
       )}
     </div>

@@ -1,7 +1,8 @@
 class SentimenClass {
   constructor(
-    listingID,
     id,
+    listingID,
+    templateId,
     title,
     description,
     imageURL,
@@ -10,8 +11,9 @@ class SentimenClass {
     salePrice,
     listingAddress
   ) {
-    this.listingID = listingID;
     this.id = id;
+    this.listingID = listingID;
+    this.templateId = templateId;
     this.title = title;
     this.description = description;
     this.imageURL = imageURL;
@@ -27,8 +29,9 @@ class SentimenClass {
 
   static SentimenFactory(element) {
     let sentimenInstance = new SentimenClass(
+      element.metadata.sentimenId,
       element.listingID,
-      element.metadata.cardID,
+      element.metadata.cardID, //template id
       element.metadata.name,
       element.metadata.description,
       element.metadata.imageUrl,
@@ -42,6 +45,7 @@ class SentimenClass {
 
   static SentimenFactoryForCollection(element) {
     let sentimenInstance = new SentimenClass(
+      element.sentimenId,
       0,
       element.cardID,
       element.name,

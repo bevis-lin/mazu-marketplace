@@ -1,7 +1,7 @@
 export const CREATE_COLLECTION = `
-import NonFungibleToken from 0xf21fee1faa18dce2
-import Sentimen from 0xf21fee1faa18dce2
-import SentimenPack from 0xf21fee1faa18dce2
+import NonFungibleToken from 0xNoneFungibleToken
+import Sentimen from 0xSentimen
+import SentimenPack from 0xPack
 
 transaction {
 

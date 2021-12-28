@@ -2,7 +2,7 @@ import { mutate, query, tx } from '@onflow/fcl';
 import { useEffect, useReducer } from 'react';
 import { useTxs } from '../providers/TxProvider';
 import { GET_USER_COLLECTION } from '../flow/get-user-collection.script';
-import { PURCHASE_SENTIMEN } from '../flow/purchase-sentimen.script';
+import { PURCHASE_SENTIMEN } from '../flow/purchase-sentimen.tx';
 import { userSentimenReducer } from '../reducer/userSentimenReducer';
 import SentimenClass from '../utils/SentimenClass';
 
@@ -16,7 +16,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
 
   useEffect(() => {
     const fetchSentimens = async () => {
-      console.log(user?.addr);
+      //console.log(user?.addr);
 
       dispatch({ type: 'PROCESSING' });
 
@@ -48,7 +48,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
   }, []);
 
   const purchaseSentimen = async (
-    cardID,
+    sentimenId,
     listingID,
     storefrontAddress,
     amount
@@ -78,7 +78,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
       });
       addTx(res);
       await tx(res).onceSealed();
-      await addSentimen(cardID);
+      await addSentimen(sentimenId);
       await getFLOWBalance();
     } catch (error) {
       console.log(error);
@@ -86,7 +86,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
     }
   };
 
-  const addSentimen = async (cardID) => {
+  const addSentimen = async (sentimenId) => {
     try {
       var res;
 
@@ -104,7 +104,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
         mappedSentimens.push(sentimen);
       });
 
-      const newSentimen = mappedSentimens.find((s) => s?.cardID === cardID);
+      const newSentimen = mappedSentimens.find((s) => s?.id === sentimenId);
       dispatch({ type: 'ADD', payload: newSentimen });
     } catch (err) {
       console.log(err);

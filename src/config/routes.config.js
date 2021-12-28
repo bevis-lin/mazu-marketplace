@@ -2,6 +2,8 @@ import Home from '../pages/Home.page';
 import Listings from '../pages/Listings.page';
 import Listing from '../pages/Listing.page';
 import UserCollection from '../pages/UserCollection.page';
+import Mint from '../pages/Mint.page';
+import Templates from '../pages/Templates.page';
 
 export const ROUTES = [
   { name: 'Home', path: '/', component: Home, nav: false },
@@ -22,6 +24,13 @@ export const ROUTES = [
     name: 'UserCollection',
     path: '/user/collection',
     component: UserCollection,
+    nav: false,
+  },
+  { name: 'Mint', path: '/user/collection/mint', component: Mint, nav: false },
+  {
+    name: 'TemplateList',
+    path: '/creator/templates',
+    component: Templates,
     nav: false,
   },
 ];

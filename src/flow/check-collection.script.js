@@ -1,5 +1,5 @@
 export const CHECK_COLLECTION = `
-import NonFungibleToken from 0xf21fee1faa18dce2  
+import NonFungibleToken from 0xNoneFungibleToken
 import Sentimen from 0xSentimen
   
   pub fun main(addr: Address): Bool {

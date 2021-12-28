@@ -1,9 +1,9 @@
 export const PURCHASE_SENTIMEN = `
-import FungibleToken from 0x9a0766d93b6608b7
-import NonFungibleToken from 0xf21fee1faa18dce2
+import FungibleToken from 0xFungibleToken
+import NonFungibleToken from 0xNoneFungibleToken
 import NFTStorefront from 0xNFTStorefront
 import Marketplace from 0xMarketplace
-import FlowToken from 0x7e60df042a9c0868
+import FlowToken from 0xFlowToken
 import Sentimen from 0xSentimen
 
 transaction(listingResourceID: UInt64, storefrontAddress: Address, buyPrice: UFix64) {

@@ -11,11 +11,11 @@ export default function Wallet() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(balance);
+    //console.log(balance);
   }, []);
 
   return (
-    <Dropdown item pointing text="錢包">
+    <Dropdown item pointing text="Wallet">
       {!balance ? (
         <div></div>
       ) : (
