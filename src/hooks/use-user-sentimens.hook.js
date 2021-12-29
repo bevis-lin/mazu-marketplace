@@ -33,7 +33,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
         //console.log(res.nftMetadatas);
         res.nftMetadatas.forEach((element) => {
           //console.log(element);
-          let sentimen = SentimenClass.SentimenFactoryForCollection(element);
+          let sentimen = SentimenClass.SentimenFactory(element);
           mappedSentimens.push(sentimen);
         });
 

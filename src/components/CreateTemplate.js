@@ -2,14 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useUser } from '../providers/UserProvider';
 import UploadImageToS3WithReactS3 from '../components/UploadImageToS3WithReactS3';
-import {
-  Button,
-  Container,
-  Form,
-  TextArea,
-  Image,
-  Grid,
-} from 'semantic-ui-react';
+import { Button, Container, Form, TextArea } from 'semantic-ui-react';
 
 export default function CreateTemplate() {
   const { createTemplate } = useUser();

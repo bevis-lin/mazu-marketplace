@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
 import { NAV_ROUTES } from '../config/routes.config';
 import Wallet from './AccountDetails';
-import { Menu, Image, Dropdown } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
 
 export default function Navbar() {

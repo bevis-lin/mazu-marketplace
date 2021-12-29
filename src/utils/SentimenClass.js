@@ -1,26 +1,12 @@
 class SentimenClass {
-  constructor(
-    id,
-    listingID,
-    templateId,
-    title,
-    description,
-    imageURL,
-    activity,
-    creator,
-    salePrice,
-    listingAddress
-  ) {
+  constructor(id, templateId, title, description, imageURL, activity, creator) {
     this.id = id;
-    this.listingID = listingID;
     this.templateId = templateId;
     this.title = title;
     this.description = description;
     this.imageURL = imageURL;
     this.activity = activity;
     this.creator = creator;
-    this.salePrice = salePrice;
-    this.listingAddress = listingAddress;
   }
 
   get type() {
@@ -28,34 +14,31 @@ class SentimenClass {
   }
 
   static SentimenFactory(element) {
-    let sentimenInstance = new SentimenClass(
-      element.metadata.sentimenId,
-      element.listingID,
-      element.metadata.cardID, //template id
-      element.metadata.name,
-      element.metadata.description,
-      element.metadata.imageUrl,
-      element.metadata.data.activity,
-      element.metadata.data.creator,
-      element.salePrice,
-      element.address
-    );
-    return sentimenInstance;
-  }
+    console.log(element);
 
-  static SentimenFactoryForCollection(element) {
-    let sentimenInstance = new SentimenClass(
-      element.sentimenId,
-      0,
-      element.cardID,
-      element.name,
-      element.description,
-      element.imageUrl,
-      element.data.activity,
-      element.data.creator,
-      ''
-    );
-    return sentimenInstance;
+    if (!element.metadata) {
+      let sentimenInstance = new SentimenClass(
+        element.sentimenId,
+        element.cardID, //template id
+        element.name,
+        element.description,
+        element.imageUrl,
+        element.data.activity,
+        element.data.creator
+      );
+      return sentimenInstance;
+    } else {
+      let sentimenInstance = new SentimenClass(
+        element.metadata.sentimenId,
+        element.metadata.cardID, //template id
+        element.metadata.name,
+        element.metadata.description,
+        element.metadata.imageUrl,
+        element.metadata.data.activity,
+        element.metadata.data.creator
+      );
+      return sentimenInstance;
+    }
   }
 }
 

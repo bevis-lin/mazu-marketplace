@@ -1,15 +1,15 @@
 import React from 'react';
-import useSentimens from '../hooks/use-sentimens.hook';
-import SentimenList from '../components/SentimenList';
+import useListings from '../hooks/use-listing.hook';
+import ListingList from '../components/ListingList';
 import ErrorLoadingRenderer from '../components/ErrorLoadingRenderer';
 import '../config/config';
 
 export default function Listings() {
-  const { loading, error, data: sentimens } = useSentimens();
+  const { loading, error, data: listings } = useListings();
 
   return (
     <ErrorLoadingRenderer loading={loading} error={error}>
-      <SentimenList sentimens={sentimens} />
+      <ListingList listings={listings} />
     </ErrorLoadingRenderer>
   );
 }

@@ -114,8 +114,6 @@ export default function useCreatorTemplates(user) {
     }
   };
 
-  const checkIsStorefrontEnabled = async () => {};
-
   return {
     ...state,
     createTemplate,

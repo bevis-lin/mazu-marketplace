@@ -1,43 +1,18 @@
 import React, { useEffect } from 'react';
 import { mutate, query, tx } from '@onflow/fcl';
 import { useTxs } from '../providers/TxProvider';
-import { useHistory } from 'react-router';
-import { useUser } from '../providers/UserProvider';
 import { CHECK_IS_SENTIMEN_LISTED } from '../flow/check-is-sentimen-listed.script';
 import { CREATE_STOREFRONT_LISTING } from '../flow/create-storefront-listing.tx';
-import {
-  Image,
-  Grid,
-  Divider,
-  Segment,
-  Button,
-  Card,
-  Icon,
-  Modal,
-} from 'semantic-ui-react';
+import { Image, Button, Card, Icon, Modal } from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
 export default function Sentimen({ sentimen }) {
   const [open, setOpen] = React.useState(false);
-  const [owned, setOwned] = useState(false);
   const [listed, setListed] = useState(false);
-  const history = useHistory();
-  const { userSentimens, purchaseSentimen } = useUser();
   const { addTx, runningTxs } = useTxs();
-  const {
-    id,
-    listingID,
-    title,
-    description,
-    imageURL,
-    activity,
-    creator,
-    listingAddress,
-    salePrice,
-  } = sentimen;
+  const { id, title, description, imageURL, activity, creator } = sentimen;
 
   useEffect(() => {
     checkIsListedOnStorefront(sentimen.id);
-    checkIfUserOwned();
   }, []);
 
   const checkIsListedOnStorefront = async (nftId) => {
@@ -84,13 +59,6 @@ export default function Sentimen({ sentimen }) {
     }
   };
 
-  const checkIfUserOwned = () => {
-    const checkSentimen = userSentimens.find((s) => s?.id == id);
-    if (checkSentimen) {
-      setOwned(true);
-    }
-  };
-
   return (
     <Card fluid>
       <Card.Content textAlign="left">
@@ -128,25 +96,7 @@ export default function Sentimen({ sentimen }) {
         </Card.Meta>
       </Card.Content>
       {(() => {
-        if (listed) {
-          return (
-            <Card.Content extra textAlign="left">
-              <Card.Meta>Listed , Price: {salePrice} FLOW</Card.Meta>
-              <Card.Meta textAlign="right">
-                <Button
-                  disabled={owned}
-                  inverted
-                  color="blue"
-                  onClick={() =>
-                    purchaseSentimen(id, listingID, listingAddress, salePrice)
-                  }
-                >
-                  Buy
-                </Button>
-              </Card.Meta>
-            </Card.Content>
-          );
-        } else {
+        if (!listed) {
           return (
             <Card.Content extra textAlign="left">
               <Card.Meta>Not listed</Card.Meta>

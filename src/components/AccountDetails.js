@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../providers/AuthProvider';
 import { useUser } from '../providers/UserProvider';
-import { Dropdown, Icon, Menu } from 'semantic-ui-react';
+import { Dropdown, Icon } from 'semantic-ui-react';
 
 export default function Wallet() {
   const { user, logOut } = useAuth();

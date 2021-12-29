@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { mutate, query, tx } from '@onflow/fcl';
-import { useHistory } from 'react-router';
 import { useUser } from '../providers/UserProvider';
 import { useTxs } from '../providers/TxProvider';
 import TemplateList from '../components/TemplateList';
 import CreateTemplate from '../components/CreateTemplate';
-import ErrorLoadingRenderer from '../components/ErrorLoadingRenderer';
 import '../config/config';
-import { Button, Divider, Header } from 'semantic-ui-react';
+import { Button, Divider } from 'semantic-ui-react';
 import { useAuth } from '../providers/AuthProvider';
 import { CHCECK_STOREFRONT_ENABLED } from '../flow/check-storefront-enabled.script';
 import { CREATE_STOREFRONT } from '../flow/create-storefront.tx';
@@ -18,7 +16,6 @@ export default function Templates() {
   const { creatorTemplates } = useUser();
   const { user } = useAuth();
   const { addTx } = useTxs();
-  const history = useHistory();
 
   useEffect(() => {
     if (!user?.addr) return;
