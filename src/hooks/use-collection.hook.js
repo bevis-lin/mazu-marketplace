@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { mutate, query, tx } from '@onflow/fcl';
 
 import { CHECK_COLLECTION } from '../flow/check-collection.script';
-import { DELETE_COLLECTION } from '../flow/delete-collection.tx';
+//import { DELETE_COLLECTION } from '../flow/delete-collection.tx';
 import { CREATE_COLLECTION } from '../flow/create-collection.tx';
 import { useTxs } from '../providers/TxProvider';
 

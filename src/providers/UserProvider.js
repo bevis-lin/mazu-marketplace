@@ -19,7 +19,7 @@ export default function UserProvider({ children }) {
   } = useUserSentimens(user, hasCollection, getFLOWBalance);
   const { data: creatorTemplates, createTemplate } = useCreatorTemplates(user);
   const { createMintRequest } = useMintRequest();
-
+  //console.log('log from user provider..');
   return (
     <UserContext.Provider
       value={{

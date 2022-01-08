@@ -10,8 +10,14 @@ export default function useFLOW(user) {
     data: null,
   });
 
+  //console.log('log from use flow..');
+
   useEffect(() => {
-    getFLOWBalance();
+    console.log('log from use flow useEffect..');
+    if (user?.loggedIn) {
+      getFLOWBalance();
+    }
+
     //eslint-disable-next-line
   }, []);
 

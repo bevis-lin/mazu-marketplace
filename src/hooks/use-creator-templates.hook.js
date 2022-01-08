@@ -16,7 +16,9 @@ export default function useCreatorTemplates(user) {
   const { addTx, runningTxs } = useTxs();
 
   useEffect(() => {
-    fetchTemplates();
+    if (user?.loggedIn) {
+      fetchTemplates();
+    }
   }, []);
 
   const fetchTemplates = async () => {
@@ -65,7 +67,7 @@ export default function useCreatorTemplates(user) {
     }
     try {
       //console.log(data);
-      const dataTemp = [{ activity: '北港', creator: 'yangba' }];
+      //const dataTemp = [{ activity: '北港', creator: 'yangba' }];
       let res = await mutate({
         cadence: CREATE_TEMPLATE,
         limit: 1000,

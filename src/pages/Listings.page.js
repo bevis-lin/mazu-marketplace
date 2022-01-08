@@ -7,6 +7,8 @@ import '../config/config';
 export default function Listings() {
   const { loading, error, data: listings } = useListings();
 
+  //console.log('in listing');
+
   return (
     <ErrorLoadingRenderer loading={loading} error={error}>
       <ListingList listings={listings} />

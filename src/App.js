@@ -1,6 +1,6 @@
 import React from 'react';
 import Providers from './providers/Providers.comp';
-import Routes from './components/Routes.comp';
+import RouteComp from './components/Routes.comp';
 import { ROUTES } from './config/routes.config';
 import Navbar from './components/Navbar';
 
@@ -12,7 +12,7 @@ export default function App() {
       <br />
       <br />
       <br />
-      <Routes routes={ROUTES} />
+      <RouteComp routes={ROUTES} />
       <br />
       <br />
     </Providers>

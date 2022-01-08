@@ -1,11 +1,7 @@
 import React from 'react';
-//import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../providers/AuthProvider';
 import { Button, Divider, Grid, Header, Image } from 'semantic-ui-react';
-export default function Home() {
-  const { loggedIn, logIn } = useAuth();
-
+export default function Login({ tools }) {
   return (
     <div className="app">
       <Grid>
@@ -31,18 +27,14 @@ export default function Home() {
             <Header as="h1" inverted color="grey">
               Mazu Photography NFT
             </Header>
-            {!loggedIn ? (
-              <Button
-                inverted
-                size="medium"
-                color="grey"
-                onClick={() => logIn()}
-              >
-                Sign In to start
-              </Button>
-            ) : (
-              <div></div>
-            )}
+            <Button
+              inverted
+              size="medium"
+              color="grey"
+              onClick={() => tools.logIn()}
+            >
+              Sign In to start
+            </Button>
           </Grid.Column>
           <Grid.Column textAlign="center" verticalAlign="middle">
             {/* <Image src="/images/yangba/180847975_153077556821952_1022103781139480060_n.jpeg" /> */}

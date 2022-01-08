@@ -40,7 +40,7 @@ export default function useListings() {
 
         let mappedListings = [];
 
-        console.log(res);
+        //console.log(res);
         res.displayItems.forEach((element) => {
           let listing = ListingClass.ListingFactory(element);
           mappedListings.push(listing);
@@ -54,7 +54,7 @@ export default function useListings() {
     };
 
     fetchListings();
-  }, []);
+  }, [activityID]);
 
   return {
     ...state,

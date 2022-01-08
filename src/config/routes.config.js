@@ -6,31 +6,31 @@ import Mint from '../pages/Mint.page';
 import Templates from '../pages/Templates.page';
 
 export const ROUTES = [
-  { name: 'Home', path: '/', component: Home, nav: false },
+  { name: 'Home', path: '/', component: <Home />, nav: false },
   {
     name: 'ActivityListings',
     path: '/activity/:activityID/listings',
-    component: Listings,
+    component: <Listings />,
     nav: false,
   },
   { name: 'Listings', path: '/listings', component: Listings, nav: false },
   {
     name: 'Listing',
     path: '/listings/:listingID',
-    component: Listing,
+    component: <Listing />,
     nav: false,
   },
   {
     name: 'UserCollection',
     path: '/user/collection',
-    component: UserCollection,
+    component: <UserCollection />,
     nav: false,
   },
   { name: 'Mint', path: '/user/collection/mint', component: Mint, nav: false },
   {
     name: 'TemplateList',
     path: '/creator/templates',
-    component: Templates,
+    component: <Templates />,
     nav: false,
   },
 ];

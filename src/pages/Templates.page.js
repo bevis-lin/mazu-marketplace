@@ -22,7 +22,7 @@ export default function Templates() {
     console.log('checking is storefront enabled...');
 
     checkIsStorefrontEnabled();
-  }, []);
+  }, [user]);
 
   const checkIsStorefrontEnabled = async () => {
     try {

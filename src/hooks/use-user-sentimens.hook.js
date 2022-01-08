@@ -44,7 +44,9 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
       }
     };
 
-    fetchSentimens();
+    if (user?.loggedIn) {
+      fetchSentimens();
+    }
   }, []);
 
   const purchaseSentimen = async (

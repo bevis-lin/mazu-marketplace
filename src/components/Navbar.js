@@ -1,6 +1,6 @@
 import { query } from '@onflow/fcl';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
 import { NAV_ROUTES } from '../config/routes.config';
 import Wallet from './AccountDetails';
@@ -9,16 +9,15 @@ import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
 
 export default function Navbar() {
   const [isCreator, setIsCreator] = useState();
-  const { user } = useAuth();
-  const history = useHistory();
+  const { user, loggedIn } = useAuth();
+  const history = useNavigate();
 
   const NavItem = ({ route }) => (
-    <Menu.Item onClick={() => history.push(route.path)}>{route.name}</Menu.Item>
+    <Menu.Item onClick={() => history(route.path)}>{route.name}</Menu.Item>
   );
 
   useEffect(() => {
-    if (!user?.addr) return;
-    console.log('checking is creator...');
+    // console.log('checking is creator...');
 
     const checkIsCreator = async () => {
       try {
@@ -37,12 +36,37 @@ export default function Navbar() {
       }
     };
 
-    checkIsCreator();
-  }, []);
+    if (user?.loggedIn) {
+      checkIsCreator();
+    }
+  }, [user]);
+
+  const getLoginMenu = () => {
+    if (loggedIn) {
+      return (
+        <Menu.Menu position="right">
+          <Wallet />
+
+          {isCreator ? (
+            <Dropdown item pointing text="Creator">
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => history('/creator/templates')}>
+                  Templates
+                </Dropdown.Item>
+                <Dropdown.Item>Mint NFT</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            ''
+          )}
+        </Menu.Menu>
+      );
+    }
+  };
 
   return (
     <Menu fixed="top" inverted size="huge">
-      <Menu.Item as="a" header onClick={() => history.push('/')}>
+      <Menu.Item as="a" header onClick={() => history('/')}>
         {/* <Image
           size="mini"
           src="/logo.png"
@@ -53,7 +77,7 @@ export default function Navbar() {
       </Menu.Item>
       <Dropdown text="Collection" pointing className="link item">
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => history.push('/activity/1/listings')}>
+          <Dropdown.Item onClick={() => history('/activity/1/listings')}>
             北港
           </Dropdown.Item>
           <Dropdown.Item>白沙屯</Dropdown.Item>
@@ -66,21 +90,7 @@ export default function Navbar() {
         <NavItem route={item} key={item.path} />
       ))}
 
-      <Menu.Menu position="right">
-        <Wallet />
-        {!isCreator ? (
-          <div></div>
-        ) : (
-          <Dropdown item pointing text="Creator">
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => history.push('/creator/templates')}>
-                Templates
-              </Dropdown.Item>
-              <Dropdown.Item>Mint NFT</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
-      </Menu.Menu>
+      {getLoginMenu()}
     </Menu>
   );
 }

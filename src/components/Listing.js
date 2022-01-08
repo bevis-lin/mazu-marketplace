@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useUser } from '../providers/UserProvider';
+import { useAuth } from '../providers/AuthProvider';
 import { Button, Card } from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
 import Sentimen from './Sentimen';
@@ -7,11 +8,14 @@ import Sentimen from './Sentimen';
 export default function Listing({ listing }) {
   const [owned, setOwned] = useState(false);
   const { userSentimens, purchaseSentimen } = useUser();
+  const { loggedIn } = useAuth();
   const { listingID, listingAddress, salePrice, sentimenId, sentimen } =
     listing;
 
   useEffect(() => {
-    checkIfUserOwned();
+    if (loggedIn) {
+      checkIfUserOwned();
+    }
   }, []);
 
   const checkIfUserOwned = () => {

@@ -10,7 +10,7 @@ export default function Listing() {
 
   useEffect(() => {
     getListingDetail(listingID);
-  }, []);
+  }, [listingID]);
 
   const getListingDetail = async (ID) => {
     try {
@@ -34,7 +34,7 @@ export default function Listing() {
   return (
     <div>
       <h3>Listing detail</h3>
-      <img src={sentimen.imageURL} />
+      <img src={sentimen.imageURL} alt="NFT" />
       <div>{sentimen.title}</div>
       <div>{sentimen.creator}</div>
     </div>

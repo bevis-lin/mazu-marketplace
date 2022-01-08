@@ -5,7 +5,7 @@ import { Table, Image, Button } from 'semantic-ui-react';
 
 export default function Template({ sentimeTemplate }) {
   const { createMintRequest } = useUser();
-  const { id, name, description, imageURL, data, totalSupply, totalMinted } =
+  const { id, name, description, imageURL, totalSupply, totalMinted } =
     sentimeTemplate;
 
   //console.log('in template');

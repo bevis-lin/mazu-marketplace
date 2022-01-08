@@ -17,13 +17,13 @@ export default function Sentimen({ sentimen }) {
 
   const checkIsListedOnStorefront = async (nftId) => {
     try {
-      console.log(nftId);
+      //console.log(nftId);
       let res = await query({
         cadence: CHECK_IS_SENTIMEN_LISTED,
         args: (arg, t) => [arg(nftId, t.UInt64)],
       });
 
-      console.log(res);
+      //console.log(res);
 
       setListed(res);
     } catch (err) {

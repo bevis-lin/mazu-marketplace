@@ -14,7 +14,7 @@ class SentimenClass {
   }
 
   static SentimenFactory(element) {
-    console.log(element);
+    //console.log(element);
 
     if (!element.metadata) {
       let sentimenInstance = new SentimenClass(
