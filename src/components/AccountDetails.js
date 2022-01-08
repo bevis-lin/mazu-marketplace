@@ -12,12 +12,14 @@ export default function Wallet() {
 
   return (
     <Dropdown item pointing text="Wallet">
-      {!balance ? (
+      {!user.loggedIn ? (
         <div></div>
       ) : (
         <Dropdown.Menu>
           <Dropdown.Item>👛 {user?.addr}</Dropdown.Item>
-          <Dropdown.Item>💰 FLOW: {balance.slice(0, -6)}</Dropdown.Item>
+          <Dropdown.Item>
+            💰 FLOW: {balance ? balance.slice(0, -6) : 0}
+          </Dropdown.Item>
           <Dropdown.Item onClick={() => history('/user/collection')}>
             <Icon name="box" />
             Collection

@@ -1,23 +1,30 @@
 import { mutate, query, tx } from '@onflow/fcl';
 import { useEffect, useReducer } from 'react';
 import { useTxs } from '../providers/TxProvider';
+import { useUserCollection } from '../providers/CollectionProvider';
+import { useAuth } from '../providers/AuthProvider';
 import { GET_USER_COLLECTION } from '../flow/get-user-collection.script';
 import { PURCHASE_SENTIMEN } from '../flow/purchase-sentimen.tx';
 import { userSentimenReducer } from '../reducer/userSentimenReducer';
 import SentimenClass from '../utils/SentimenClass';
 
-export default function useUserSentimens(user, collection, getFLOWBalance) {
+export default function useUserSentimens(getFLOWBalance) {
   const [state, dispatch] = useReducer(userSentimenReducer, {
     loading: false,
     error: false,
     data: [],
   });
+
+  const { hasCollection } = useUserCollection();
+  const { user, loggedIn } = useAuth();
   const { addTx, runningTxs } = useTxs();
 
   useEffect(() => {
     const fetchSentimens = async () => {
       //console.log(user?.addr);
-
+      console.log(
+        'begin to get user sentimens in user-sentimen hook useEffect...'
+      );
       dispatch({ type: 'PROCESSING' });
 
       try {
@@ -44,10 +51,12 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
       }
     };
 
-    if (user?.loggedIn) {
+    if (loggedIn) {
       fetchSentimens();
+    } else {
+      console.log('skip user-sentiment useEffect...');
     }
-  }, []);
+  }, [loggedIn]);
 
   const purchaseSentimen = async (
     sentimenId,
@@ -55,7 +64,7 @@ export default function useUserSentimens(user, collection, getFLOWBalance) {
     storefrontAddress,
     amount
   ) => {
-    if (!collection) {
+    if (!hasCollection) {
       alert(
         'You need to enable the collection first. Go to the tab Collection'
       );

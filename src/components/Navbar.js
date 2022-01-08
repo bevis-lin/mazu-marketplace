@@ -2,6 +2,7 @@ import { query } from '@onflow/fcl';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
+import { useUser } from '../providers/UserProvider';
 import { NAV_ROUTES } from '../config/routes.config';
 import Wallet from './AccountDetails';
 import { Menu, Dropdown } from 'semantic-ui-react';
@@ -10,6 +11,7 @@ import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
 export default function Navbar() {
   const [isCreator, setIsCreator] = useState();
   const { user, loggedIn } = useAuth();
+  const { balance, getFLOWBalance } = useUser();
   const history = useNavigate();
 
   const NavItem = ({ route }) => (
@@ -21,14 +23,14 @@ export default function Navbar() {
 
     const checkIsCreator = async () => {
       try {
-        console.log(user);
+        //console.log(user);
 
         let res = await query({
           cadence: CHECK_IS_CREATOR,
           args: (arg, t) => [arg(user?.addr, t.Address)],
         });
 
-        console.log(res);
+        //console.log(res);
 
         setIsCreator(res);
       } catch (err) {
@@ -37,12 +39,16 @@ export default function Navbar() {
     };
 
     if (user?.loggedIn) {
+      getFLOWBalance();
       checkIsCreator();
+    } else {
+      console.log('skip navbar useEffect...');
     }
   }, [user]);
 
   const getLoginMenu = () => {
     if (loggedIn) {
+      //console.log(`In navbar user loggedin balance:${balance}`);
       return (
         <Menu.Menu position="right">
           <Wallet />

@@ -3,7 +3,7 @@ import Sentimen from './Sentimen';
 import { Card, Container } from 'semantic-ui-react';
 
 export default function SentimenList({ sentimens }) {
-  console.log(sentimens);
+  //console.log(sentimens);
 
   const getSentimenList = (sentimens) => {
     return sentimens.map((sentimen, i) => (

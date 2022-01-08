@@ -1,5 +1,6 @@
 import { mutate, query, tx } from '@onflow/fcl';
 import { useEffect, useReducer } from 'react';
+import { useAuth } from '../providers/AuthProvider';
 import { useTxs } from '../providers/TxProvider';
 import { GET_CREATOR_TEMPLATES } from '../flow/get-creator-templates.script';
 import { creatorTemplateReducer } from '../reducer/creatorTemplateReducer';
@@ -7,50 +8,53 @@ import SentimenTemplateClass from '../utils/SentimenTemplate';
 import { CREATE_TEMPLATE } from '../flow/create-template.tx';
 import { CREATE_STOREFRONT } from '../flow/create-storefront.tx';
 
-export default function useCreatorTemplates(user) {
+export default function useCreatorTemplates() {
   const [state, dispatch] = useReducer(creatorTemplateReducer, {
     loading: false,
     error: false,
     data: [],
   });
+  const { user, loggedIn } = useAuth();
   const { addTx, runningTxs } = useTxs();
 
   useEffect(() => {
-    if (user?.loggedIn) {
+    const fetchTemplates = async () => {
+      //console.log(user?.addr);
+
+      dispatch({ type: 'PROCESSING' });
+
+      try {
+        var res;
+
+        res = await query({
+          cadence: GET_CREATOR_TEMPLATES,
+          args: (arg, t) => [arg(user?.addr, t.Address)],
+        });
+
+        let mappedTemplates = [];
+
+        //console.log(res);
+        res.forEach((element) => {
+          //console.log(element);
+          let sentimenTemplate =
+            SentimenTemplateClass.SentimenTemplateFactory(element);
+          //console.log(sentimenTemplate);
+          mappedTemplates.push(sentimenTemplate);
+        });
+
+        dispatch({ type: 'SUCCESS', payload: mappedTemplates });
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: 'ERROR' });
+      }
+    };
+
+    if (loggedIn) {
       fetchTemplates();
+    } else {
+      console.log('skip use create template useEffect...');
     }
-  }, []);
-
-  const fetchTemplates = async () => {
-    //console.log(user?.addr);
-
-    dispatch({ type: 'PROCESSING' });
-
-    try {
-      var res;
-
-      res = await query({
-        cadence: GET_CREATOR_TEMPLATES,
-        args: (arg, t) => [arg(user?.addr, t.Address)],
-      });
-
-      let mappedTemplates = [];
-
-      //console.log(res);
-      res.forEach((element) => {
-        //console.log(element);
-        let sentimenTemplate =
-          SentimenTemplateClass.SentimenTemplateFactory(element);
-        //console.log(sentimenTemplate);
-        mappedTemplates.push(sentimenTemplate);
-      });
-
-      dispatch({ type: 'SUCCESS', payload: mappedTemplates });
-    } catch (err) {
-      console.log(err);
-      dispatch({ type: 'ERROR' });
-    }
-  };
+  }, [loggedIn]);
 
   const createTemplate = async (
     templateName,
@@ -89,7 +93,7 @@ export default function useCreatorTemplates(user) {
       await tx(res).onceSealed();
       //console.log(res);
       //await addTemplate(res);
-      fetchTemplates();
+      //fetchTemplates();
     } catch (error) {
       console.log(error);
       alert(error);

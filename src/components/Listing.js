@@ -29,18 +29,29 @@ export default function Listing({ listing }) {
     <Card fluid>
       <Sentimen sentimen={sentimen} />
       <Card.Content extra textAlign="left">
-        <Card.Meta>Listed , Price: {salePrice} FLOW</Card.Meta>
+        <Card.Meta>
+          {owned ? 'Listed,' : ''} Price: <b>{salePrice}</b> FLOW
+        </Card.Meta>
         <Card.Meta textAlign="right">
-          <Button
-            disabled={owned}
-            inverted
-            color="blue"
-            onClick={() =>
-              purchaseSentimen(sentimenId, listingID, listingAddress, salePrice)
-            }
-          >
-            Buy
-          </Button>
+          {loggedIn ? (
+            <Button
+              disabled={owned}
+              inverted
+              color="blue"
+              onClick={() =>
+                purchaseSentimen(
+                  sentimenId,
+                  listingID,
+                  listingAddress,
+                  salePrice
+                )
+              }
+            >
+              Buy
+            </Button>
+          ) : (
+            <div />
+          )}
         </Card.Meta>
       </Card.Content>
     </Card>

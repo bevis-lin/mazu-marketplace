@@ -1,11 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import { useUser } from '../providers/UserProvider';
+//import { useUser } from '../providers/UserProvider';
+import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 import UploadImageToS3WithReactS3 from '../components/UploadImageToS3WithReactS3';
 import { Button, Container, Form, TextArea } from 'semantic-ui-react';
 
 export default function CreateTemplate() {
-  const { createTemplate } = useUser();
+  const { createTemplate } = useCreatorTemplates();
   const [templateName, setTemplateName] = useState('NFT name');
   const [totalSupply, setTotalSupply] = useState(1);
   const [description, setDescription] = useState(
