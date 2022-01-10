@@ -4,6 +4,7 @@ import Listing from '../pages/Listing.page';
 import UserCollection from '../pages/UserCollection.page';
 import Mint from '../pages/Mint.page';
 import Templates from '../pages/Templates.page';
+import ViewNFT from '../pages/ViewNFT.page';
 
 export const ROUTES = [
   { name: 'Home', path: '/', component: <Home />, nav: false },
@@ -13,7 +14,7 @@ export const ROUTES = [
     component: <Listings />,
     nav: false,
   },
-  { name: 'Listings', path: '/listings', component: Listings, nav: false },
+  { name: 'Listings', path: '/listings', component: <Listings />, nav: false },
   {
     name: 'Listing',
     path: '/listings/:listingID',
@@ -26,13 +27,19 @@ export const ROUTES = [
     component: <UserCollection />,
     nav: false,
   },
-  { name: 'Mint', path: '/user/collection/mint', component: Mint, nav: false },
+  {
+    name: 'Mint',
+    path: '/user/collection/mint',
+    component: <Mint />,
+    nav: false,
+  },
   {
     name: 'TemplateList',
     path: '/creator/templates',
     component: <Templates />,
     nav: false,
   },
+  { name: 'ViewNFT', path: '/nft/:nftID', component: <ViewNFT />, nav: false },
 ];
 
 export const NAV_ROUTES = ROUTES.filter((r) => r.nav);

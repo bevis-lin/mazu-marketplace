@@ -37,6 +37,7 @@ export default function useUserSentimens(getFLOWBalance) {
 
         let mappedSentimens = [];
 
+        console.log(res);
         //console.log(res.nftMetadatas);
         res.nftMetadatas.forEach((element) => {
           //console.log(element);
