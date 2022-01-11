@@ -13,27 +13,30 @@ export default function useCollection() {
   const { addTx } = useTxs();
 
   useEffect(() => {
+    const checkCollection = async () => {
+      try {
+        let res = await query({
+          cadence: CHECK_COLLECTION,
+          args: (arg, t) => [arg(user?.addr, t.Address)],
+        });
+        setHasCollection(res);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
+
     if (!loggedIn) {
       console.log(`skip use-collection useEffect`);
       return;
     }
+
     setLoading(true);
     checkCollection();
-  }, [loggedIn]);
 
-  const checkCollection = async () => {
-    try {
-      let res = await query({
-        cadence: CHECK_COLLECTION,
-        args: (arg, t) => [arg(user?.addr, t.Address)],
-      });
-      setHasCollection(res);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-    }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn]);
 
   const createCollection = async () => {
     let res = await mutate({
@@ -48,7 +51,6 @@ export default function useCollection() {
   return {
     loading,
     hasCollection,
-    checkCollection,
     createCollection,
   };
 }

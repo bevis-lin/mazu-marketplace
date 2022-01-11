@@ -5,7 +5,7 @@ import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 import UploadImageToS3WithReactS3 from '../components/UploadImageToS3WithReactS3';
 import { Button, Container, Form, TextArea } from 'semantic-ui-react';
 
-export default function CreateTemplate() {
+export default function CreateTemplate({ onCreatedHandler }) {
   const { createTemplate } = useCreatorTemplates();
   const [templateName, setTemplateName] = useState('NFT name');
   const [totalSupply, setTotalSupply] = useState(1);
@@ -14,17 +14,22 @@ export default function CreateTemplate() {
   );
   const [imageUrl, setImageUrl] = useState('');
   const [templateData, setTemplateData] = useState('');
+  const [activity, setActivity] = useState('');
+  const [creatorName, setCreatorName] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    createTemplate(
+    await createTemplate(
       templateName,
       description,
-      templateData,
+      activity,
+      creatorName,
       totalSupply,
       imageUrl
     );
+
+    onCreatedHandler();
   };
 
   const onFileUploadedListener = (data) => {
@@ -59,11 +64,21 @@ export default function CreateTemplate() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Field>
-        <Form.TextArea
-          label="Extra Info"
-          value={templateData}
-          onChange={(e) => setTemplateData(e.target.value)}
-        ></Form.TextArea>
+        <Form.Field>
+          <label>Activity</label>
+          <input
+            value={activity}
+            onChange={(e) => setActivity(e.target.value)}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Creator</label>
+          <input
+            value={creatorName}
+            onChange={(e) => setCreatorName(e.target.value)}
+          />
+        </Form.Field>
+
         <Form.Input
           fluid
           label="URL of the uploaded image"

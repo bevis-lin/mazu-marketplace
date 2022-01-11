@@ -57,6 +57,8 @@ export default function useUserSentimens(getFLOWBalance) {
     } else {
       console.log('skip user-sentiment useEffect...');
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   const purchaseSentimen = async (

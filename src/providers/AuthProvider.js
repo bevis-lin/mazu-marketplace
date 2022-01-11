@@ -1,7 +1,6 @@
 import React, { createContext, useContext } from 'react';
 
 import useCurrentUser from '../hooks/use-current-user.hook';
-import Login from '../pages/Login.page';
 
 const AuthContext = createContext();
 

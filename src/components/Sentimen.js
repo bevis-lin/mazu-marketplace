@@ -5,6 +5,7 @@ import { CHECK_IS_SENTIMEN_LISTED } from '../flow/check-is-sentimen-listed.scrip
 import { CREATE_STOREFRONT_LISTING } from '../flow/create-storefront-listing.tx';
 import { Image, Button, Card, Icon, Modal } from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
+
 export default function Sentimen({ sentimen }) {
   const [open, setOpen] = React.useState(false);
   const [listed, setListed] = useState(false);
@@ -12,15 +13,15 @@ export default function Sentimen({ sentimen }) {
   const { id, title, description, imageURL, activity, creator } = sentimen;
 
   useEffect(() => {
-    checkIsListedOnStorefront(sentimen.id);
-  }, []);
+    checkIsListedOnStorefront(sentimen);
+  }, [sentimen]);
 
-  const checkIsListedOnStorefront = async (nftId) => {
+  const checkIsListedOnStorefront = async (sentimen) => {
     try {
       //console.log(nftId);
       let res = await query({
         cadence: CHECK_IS_SENTIMEN_LISTED,
-        args: (arg, t) => [arg(nftId, t.UInt64)],
+        args: (arg, t) => [arg(sentimen.id, t.UInt64)],
       });
 
       //console.log(res);

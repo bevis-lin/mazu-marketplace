@@ -2,58 +2,63 @@ import React, { useEffect, useState } from 'react';
 import { mutate, query, tx } from '@onflow/fcl';
 //import { useUser } from '../providers/UserProvider';
 import useCreatorTemplates from '../hooks/use-creator-templates.hook';
+import { useNavigate } from 'react-router-dom';
 
 import { useTxs } from '../providers/TxProvider';
 import TemplateList from '../components/TemplateList';
-import CreateTemplate from '../components/CreateTemplate';
 import '../config/config';
-import { Button, Divider } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { useAuth } from '../providers/AuthProvider';
 import { CHCECK_STOREFRONT_ENABLED } from '../flow/check-storefront-enabled.script';
 import { CREATE_STOREFRONT } from '../flow/create-storefront.tx';
 
 export default function Templates() {
   const [isStorefrontEnabled, setIsStorefrontEnabled] = useState(false);
-  const [isCreatePanelOpened, setIsCreatePanelOpened] = useState(false);
-  //const { creatorTemplates } = useUser();
   const { user, loggedIn } = useAuth();
   const { addTx } = useTxs();
-  const { data: creatorTemplates } = useCreatorTemplates(user);
+  const { data: creatorTemplates } = useCreatorTemplates();
+  const history = useNavigate();
 
   useEffect(() => {
+    const checkIsStorefrontEnabled = async () => {
+      try {
+        //console.log(user);
+        console.log('begin to check if storefront enabled...');
+
+        let res = await query({
+          cadence: CHCECK_STOREFRONT_ENABLED,
+          args: (arg, t) => [arg(user?.addr, t.Address)],
+        });
+
+        console.log(`checkIsStorefrontEnabled result:${res}`);
+
+        setIsStorefrontEnabled(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     if (!loggedIn) {
       console.log('skip in Template page useEffect...');
     }
 
     checkIsStorefrontEnabled();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
-  const checkIsStorefrontEnabled = async () => {
+  const enableStorefront = async () => {
     try {
-      //console.log(user);
-      console.log('begin to check if storefront enabled...');
-
-      let res = await query({
-        cadence: CHCECK_STOREFRONT_ENABLED,
-        args: (arg, t) => [arg(user?.addr, t.Address)],
+      let res = await mutate({
+        cadence: CREATE_STOREFRONT,
+        limit: 55,
       });
-
-      console.log(`checkIsStorefrontEnabled result:${res}`);
-
-      setIsStorefrontEnabled(res);
+      addTx(res);
+      await tx(res).onceSealed();
+      setIsStorefrontEnabled(true);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const enableStorefront = async () => {
-    let res = await mutate({
-      cadence: CREATE_STOREFRONT,
-      limit: 55,
-    });
-    addTx(res);
-    await tx(res).onceSealed();
-    checkIsStorefrontEnabled();
   };
 
   return (
@@ -67,19 +72,9 @@ export default function Templates() {
       ) : (
         <div>
           <TemplateList templates={creatorTemplates} />
-          <Divider hidden />
-          {!isCreatePanelOpened ? (
-            <Button inverted onClick={() => setIsCreatePanelOpened(true)}>
-              Create A New Template
-            </Button>
-          ) : (
-            <div>
-              <CreateTemplate />
-              <Button inverted onClick={() => setIsCreatePanelOpened(false)}>
-                Close
-              </Button>
-            </div>
-          )}
+          <Button inverted onClick={() => history('/creator/templates/create')}>
+            Create Template
+          </Button>
         </div>
       )}
     </div>

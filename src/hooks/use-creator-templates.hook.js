@@ -54,12 +54,15 @@ export default function useCreatorTemplates() {
     } else {
       console.log('skip use create template useEffect...');
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   const createTemplate = async (
     templateName,
     description,
-    data,
+    activity,
+    creatorName,
     totalSupply,
     imageUrl
   ) => {
@@ -81,8 +84,8 @@ export default function useCreatorTemplates() {
           arg(imageUrl, t.String),
           arg(
             [
-              { key: 'activity', value: '北港' },
-              { key: 'creator', value: 'yangba' },
+              { key: 'activity', value: activity },
+              { key: 'creator', value: creatorName },
             ],
             t.Dictionary({ key: t.String, value: t.String })
           ),
@@ -90,7 +93,9 @@ export default function useCreatorTemplates() {
         ],
       });
       addTx(res);
+      console.log('add template waiting starts...');
       await tx(res).onceSealed();
+      console.log('add template waiting ends...');
       //console.log(res);
       //await addTemplate(res);
       //fetchTemplates();

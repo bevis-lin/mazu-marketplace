@@ -11,7 +11,7 @@ import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
 export default function Navbar() {
   const [isCreator, setIsCreator] = useState();
   const { user, loggedIn } = useAuth();
-  const { balance, getFLOWBalance } = useUser();
+  const { getFLOWBalance } = useUser();
   const history = useNavigate();
 
   const NavItem = ({ route }) => (
@@ -44,6 +44,8 @@ export default function Navbar() {
     } else {
       console.log('skip navbar useEffect...');
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const getLoginMenu = () => {
@@ -59,7 +61,9 @@ export default function Navbar() {
                 <Dropdown.Item onClick={() => history('/creator/templates')}>
                   Templates
                 </Dropdown.Item>
-                <Dropdown.Item>Mint NFT</Dropdown.Item>
+                <Dropdown.Item onClick={() => history('/creator/requests')}>
+                  Mint Request
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ) : (

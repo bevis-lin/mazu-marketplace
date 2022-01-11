@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../providers/AuthProvider';
@@ -9,6 +9,11 @@ export default function Wallet() {
   const { user, logOut } = useAuth();
   const { balance } = useUser();
   const history = useNavigate();
+
+  const toLogOut = () => {
+    logOut();
+    history('/');
+  };
 
   return (
     <Dropdown item pointing text="Wallet">
@@ -24,7 +29,7 @@ export default function Wallet() {
             <Icon name="box" />
             Collection
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => logOut()}>👋 Logout</Dropdown.Item>
+          <Dropdown.Item onClick={() => toLogOut()}>👋 Logout</Dropdown.Item>
         </Dropdown.Menu>
       )}
     </Dropdown>

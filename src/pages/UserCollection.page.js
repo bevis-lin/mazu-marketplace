@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useUser } from '../providers/UserProvider';
 import { useUserCollection } from '../providers/CollectionProvider';
 import SentimenList from '../components/SentimenList';
@@ -6,13 +6,8 @@ import '../config/config';
 import { Button, Divider, Header, Segment } from 'semantic-ui-react';
 
 export default function UserCollection() {
-  const { hasCollection, checkCollection, createCollection } =
-    useUserCollection();
+  const { hasCollection, createCollection } = useUserCollection();
   const { userSentimens } = useUser();
-
-  useEffect(() => {
-    //checkCollection();
-  }, []);
 
   return (
     <div>

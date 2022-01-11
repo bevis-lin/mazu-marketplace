@@ -16,7 +16,9 @@ export default function Listing({ listing }) {
     if (loggedIn) {
       checkIfUserOwned();
     }
-  }, []);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn]);
 
   const checkIfUserOwned = () => {
     const checkSentimen = userSentimens.find((s) => s?.id === sentimenId);
