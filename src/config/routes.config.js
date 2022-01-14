@@ -6,6 +6,7 @@ import Templates from '../pages/Templates.page';
 import ViewNFT from '../pages/ViewNFT.page';
 import NewTemplate from '../pages/NewTemplate.page';
 import MintRequests from '../pages/MintRequests.page';
+import CreatorProfile from '../pages/CreatorProfile.page';
 
 export const ROUTES = [
   { name: 'Home', path: '/', component: <Home />, nav: false },
@@ -45,6 +46,12 @@ export const ROUTES = [
     name: 'MintRequests',
     path: '/creator/requests',
     component: <MintRequests />,
+    nav: false,
+  },
+  {
+    name: 'Creator',
+    path: '/creator',
+    component: <CreatorProfile />,
     nav: false,
   },
 ];

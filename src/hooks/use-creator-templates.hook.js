@@ -1,5 +1,5 @@
 import { mutate, query, tx } from '@onflow/fcl';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useAuth } from '../providers/AuthProvider';
 import { useTxs } from '../providers/TxProvider';
 import { GET_CREATOR_TEMPLATES } from '../flow/get-creator-templates.script';
@@ -7,8 +7,12 @@ import { creatorTemplateReducer } from '../reducer/creatorTemplateReducer';
 import SentimenTemplateClass from '../utils/SentimenTemplate';
 import { CREATE_TEMPLATE } from '../flow/create-template.tx';
 import { CREATE_STOREFRONT } from '../flow/create-storefront.tx';
+import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
+import { GET_CREATOR_PROFILE } from '../flow/get-creator-profile.script';
 
 export default function useCreatorTemplates() {
+  const [isCreator, setIsCreator] = useState(false);
+  const [creator, setCreator] = useState(null);
   const [state, dispatch] = useReducer(creatorTemplateReducer, {
     loading: false,
     error: false,
@@ -50,6 +54,7 @@ export default function useCreatorTemplates() {
     };
 
     if (loggedIn) {
+      checkIsCreator();
       fetchTemplates();
     } else {
       console.log('skip use create template useEffect...');
@@ -58,13 +63,50 @@ export default function useCreatorTemplates() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
+  const getProfile = async () => {
+    try {
+      let res = await query({
+        cadence: GET_CREATOR_PROFILE,
+        args: (arg, t) => [arg(user?.addr, t.Address)],
+      });
+
+      console.log(res);
+
+      setCreator(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const checkIsCreator = async () => {
+    try {
+      //console.log(user);
+
+      let res = await query({
+        cadence: CHECK_IS_CREATOR,
+        args: (arg, t) => [arg(user?.addr, t.Address)],
+      });
+
+      //console.log(res);
+
+      setIsCreator(res);
+      if (res) {
+        console.log('getting creator profile...');
+        getProfile();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const createTemplate = async (
     templateName,
     description,
     activity,
     creatorName,
     totalSupply,
-    imageUrl
+    imageUrl,
+    siteId
   ) => {
     if (runningTxs) {
       alert(
@@ -90,6 +132,7 @@ export default function useCreatorTemplates() {
             t.Dictionary({ key: t.String, value: t.String })
           ),
           arg(parseInt(totalSupply), t.UInt64),
+          arg(siteId, t.String),
         ],
       });
       addTx(res);
@@ -127,6 +170,8 @@ export default function useCreatorTemplates() {
 
   return {
     ...state,
+    isCreator,
+    creator,
     createTemplate,
     enableStorefront,
   };

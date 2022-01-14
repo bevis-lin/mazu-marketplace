@@ -29,7 +29,7 @@ pub fun main(addr: Address): Result {
 pub struct NFT {
     pub let nftType: Type
     pub let nftID: UInt64
-
+   
     init(nftType: Type, nftID: UInt64) {
         self.nftType = nftType
         self.nftID = nftID

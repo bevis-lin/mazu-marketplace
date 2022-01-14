@@ -3,7 +3,7 @@ import useUserSentimens from '../hooks/use-user-sentimens.hook';
 import useMintRequest from '../hooks/use-mint-request.hook';
 import useFLOW from '../hooks/use-flow.hook';
 //import { useAuth } from './AuthProvider';
-//import useCreatorTemplates from '../hooks/use-creator-templates.hook';
+import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 
 const UserContext = createContext();
 
@@ -16,6 +16,7 @@ export default function UserProvider({ children }) {
     purchaseSentimen,
   } = useUserSentimens(getFLOWBalance);
   //const { data: creatorTemplates, createTemplate } = useCreatorTemplates(user);
+  const { isCreator, creator } = useCreatorTemplates();
   const { createMintRequest } = useMintRequest();
   //console.log('log from user provider..');
   return (
@@ -27,6 +28,8 @@ export default function UserProvider({ children }) {
         balance,
         getFLOWBalance,
         createMintRequest,
+        isCreator,
+        creator,
       }}
     >
       {children}

@@ -4,7 +4,8 @@ import useCollection from '../hooks/use-collection.hook';
 const CollectionContext = createContext();
 
 export default function CollectionProvider({ children }) {
-  const { hasCollection, checkCollection, createCollection } = useCollection();
+  const { hasCollection, checkCollection, createCollection, deleteCollection } =
+    useCollection();
 
   return (
     <CollectionContext.Provider
@@ -12,6 +13,7 @@ export default function CollectionProvider({ children }) {
         hasCollection,
         checkCollection,
         createCollection,
+        deleteCollection,
       }}
     >
       {children}

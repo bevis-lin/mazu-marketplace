@@ -3,7 +3,7 @@ import SentimenTemplate from 0xTemplate
 import SentimenCreator from 0xCreator
 
 transaction(name: String, description: String, imageUrl: String, 
-data: {String:String}, totalSupply: UInt64) {
+data: {String:String}, totalSupply: UInt64, siteId: String) {
 
   let creator: Address
 
@@ -14,7 +14,7 @@ data: {String:String}, totalSupply: UInt64) {
   }
 
   execute{
-        SentimenTemplate.addTemplate(siteId: "mazu", creator:self.creator, name: name, description: description,
+        SentimenTemplate.addTemplate(siteId: siteId, creator:self.creator, name: name, description: description,
         imageUrl: imageUrl, data: data, totalSupploy: totalSupply)
   }
 }

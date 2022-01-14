@@ -1,70 +1,38 @@
 import React, { useEffect } from 'react';
-import { mutate, query, tx } from '@onflow/fcl';
-import { useTxs } from '../providers/TxProvider';
-import { CHECK_IS_SENTIMEN_LISTED } from '../flow/check-is-sentimen-listed.script';
-import { CREATE_STOREFRONT_LISTING } from '../flow/create-storefront-listing.tx';
-import { Image, Button, Card, Icon, Modal } from 'semantic-ui-react';
+import useListings from '../hooks/use-listing.hook';
+import { Image, Button, Card, Icon, Modal, Form } from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
 
 export default function Sentimen({ sentimen }) {
+  const { checkIsListedOnStorefront, createStorefrontListing } = useListings();
   const [open, setOpen] = React.useState(false);
   const [listed, setListed] = useState(false);
-  const { addTx, runningTxs } = useTxs();
+  const [listPrice, setListPrice] = useState(0.1);
+
   const { id, title, description, imageURL, activity, creator } = sentimen;
 
   useEffect(() => {
-    checkIsListedOnStorefront(sentimen);
-  }, [sentimen]);
-
-  const checkIsListedOnStorefront = async (sentimen) => {
-    try {
-      //console.log(nftId);
-      let res = await query({
-        cadence: CHECK_IS_SENTIMEN_LISTED,
-        args: (arg, t) => [arg(sentimen.id, t.UInt64)],
+    if (sentimen) {
+      checkIsListedOnStorefront(sentimen).then((value) => {
+        setListed(value);
       });
-
-      //console.log(res);
-
-      setListed(res);
-    } catch (err) {
-      console.log(err);
     }
-  };
+  }, []);
 
-  const createStorefrontListing = async (nftId, salePrice, activityId) => {
-    if (runningTxs) {
-      alert(
-        'Transactions are still running. Please wait for them to finish first.'
-      );
-      return;
-    }
+  const doListSale = async (event) => {
+    event.preventDefault();
 
-    try {
-      var res;
-      res = await mutate({
-        cadence: CREATE_STOREFRONT_LISTING,
-        limit: 1000,
-        args: (arg, t) => [
-          arg(nftId, t.UInt64),
-          arg(salePrice, t.UFix64),
-          arg(activityId, t.UInt),
-        ],
-      });
-      addTx(res);
-      await tx(res).onceSealed();
-      setListed(checkIsListedOnStorefront(nftId));
-    } catch (err) {
-      console.log(err);
-      alert(err);
-    }
+    await createStorefrontListing(id, listPrice, 1);
+
+    checkIsListedOnStorefront(sentimen).then((value) => {
+      setListed(value);
+    });
   };
 
   return (
     <Card fluid>
       <Card.Content textAlign="left">
         <Card.Header>{title}</Card.Header>
-
         <Modal
           open={open}
           closeIcon
@@ -81,6 +49,20 @@ export default function Sentimen({ sentimen }) {
             <Image size="large" src={imageURL} />
             <Modal.Description>
               <p>{description}</p>
+              {!listed ? (
+                <Form size="tiny" onSubmit={doListSale}>
+                  <Form.Field>
+                    <label>List Price</label>
+                    <input
+                      value={listPrice}
+                      onChange={(e) => setListPrice(e.target.value)}
+                    />
+                  </Form.Field>
+                  <Button type="submit">Sale</Button>
+                </Form>
+              ) : (
+                ''
+              )}
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
@@ -95,25 +77,8 @@ export default function Sentimen({ sentimen }) {
         <Card.Meta>
           <Icon name="user circle" /> {creator}
         </Card.Meta>
+        {!listed ? <Card.Meta>Not listed</Card.Meta> : ''}
       </Card.Content>
-      {(() => {
-        if (!listed) {
-          return (
-            <Card.Content extra textAlign="left">
-              <Card.Meta>Not listed</Card.Meta>
-              <Card.Meta textAlign="right">
-                <Button
-                  inverted
-                  color="blue"
-                  onClick={() => createStorefrontListing(id, 0.0001, 1)}
-                >
-                  Sale
-                </Button>
-              </Card.Meta>
-            </Card.Content>
-          );
-        }
-      })()}
     </Card>
   );
 }

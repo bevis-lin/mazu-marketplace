@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-//import { useUser } from '../providers/UserProvider';
+import { useUser } from '../providers/UserProvider';
 import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 import UploadImageToS3WithReactS3 from '../components/UploadImageToS3WithReactS3';
 import { Button, Container, Form, TextArea } from 'semantic-ui-react';
 
 export default function CreateTemplate({ onCreatedHandler }) {
+  const { creator } = useUser();
   const { createTemplate } = useCreatorTemplates();
   const [templateName, setTemplateName] = useState('NFT name');
   const [totalSupply, setTotalSupply] = useState(1);
@@ -13,7 +14,7 @@ export default function CreateTemplate({ onCreatedHandler }) {
     'Short introduction for your NFT'
   );
   const [imageUrl, setImageUrl] = useState('');
-  const [templateData, setTemplateData] = useState('');
+  const [siteId, setSiteId] = useState('1');
   const [activity, setActivity] = useState('');
   const [creatorName, setCreatorName] = useState('');
 
@@ -26,7 +27,8 @@ export default function CreateTemplate({ onCreatedHandler }) {
       activity,
       creatorName,
       totalSupply,
-      imageUrl
+      imageUrl,
+      siteId
     );
 
     onCreatedHandler();
@@ -36,6 +38,12 @@ export default function CreateTemplate({ onCreatedHandler }) {
     console.log(data);
     setImageUrl(data.location);
   };
+
+  useEffect(() => {
+    if (creator) {
+      setCreatorName(creator.name);
+    }
+  }, [creator]);
 
   return (
     <Container textAlign="left">
@@ -85,6 +93,12 @@ export default function CreateTemplate({ onCreatedHandler }) {
           value={imageUrl}
           readonly
         />
+
+        <Form.Field>
+          <label>Collection</label>
+          <input value={siteId} readOnly />
+        </Form.Field>
+
         <Button type="submit">Submit</Button>
       </Form>
 

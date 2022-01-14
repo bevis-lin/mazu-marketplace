@@ -2,10 +2,10 @@ import { mutate, tx } from '@onflow/fcl';
 import { useTxs } from '../providers/TxProvider';
 import { CREATE_MINT_REQUEST } from '../flow/create-mint-request.tx';
 
-export default function useMintRequest(user) {
+export default function useMintRequest() {
   const { addTx, runningTxs } = useTxs();
 
-  const createMintRequest = async (templateId, salePrice) => {
+  const createMintRequest = async (templateId) => {
     if (runningTxs) {
       alert(
         'Transactions are still running. Please wait for them to finish first.'
@@ -17,7 +17,7 @@ export default function useMintRequest(user) {
       let res = await mutate({
         cadence: CREATE_MINT_REQUEST,
         limit: 1000,
-        args: (arg, t) => [arg(templateId, t.UInt64), arg(salePrice, t.UFix64)],
+        args: (arg, t) => [arg(templateId, t.UInt64)],
       });
 
       addTx(res);

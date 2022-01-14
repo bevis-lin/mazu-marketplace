@@ -6,12 +6,10 @@ import { useUser } from '../providers/UserProvider';
 import { NAV_ROUTES } from '../config/routes.config';
 import Wallet from './AccountDetails';
 import { Menu, Dropdown } from 'semantic-ui-react';
-import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
 
 export default function Navbar() {
-  const [isCreator, setIsCreator] = useState();
   const { user, loggedIn } = useAuth();
-  const { getFLOWBalance } = useUser();
+  const { isCreator, getFLOWBalance } = useUser();
   const history = useNavigate();
 
   const NavItem = ({ route }) => (
@@ -21,26 +19,8 @@ export default function Navbar() {
   useEffect(() => {
     // console.log('checking is creator...');
 
-    const checkIsCreator = async () => {
-      try {
-        //console.log(user);
-
-        let res = await query({
-          cadence: CHECK_IS_CREATOR,
-          args: (arg, t) => [arg(user?.addr, t.Address)],
-        });
-
-        //console.log(res);
-
-        setIsCreator(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     if (user?.loggedIn) {
       getFLOWBalance();
-      checkIsCreator();
     } else {
       console.log('skip navbar useEffect...');
     }
@@ -58,6 +38,9 @@ export default function Navbar() {
           {isCreator ? (
             <Dropdown item pointing text="Creator">
               <Dropdown.Menu>
+                <Dropdown.Item onClick={() => history('/creator')}>
+                  Profile
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => history('/creator/templates')}>
                   Templates
                 </Dropdown.Item>
@@ -83,16 +66,16 @@ export default function Navbar() {
           style={{ marginRight: '1.5em' }}
           onClick={() => history.push('/')}
         /> */}
-        Mazu NFT
+        Sentimen.Art
       </Menu.Item>
       <Dropdown text="Collection" pointing className="link item">
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => history('/activity/1/listings')}>
-            北港
+            Mazu
           </Dropdown.Item>
-          <Dropdown.Item>白沙屯</Dropdown.Item>
-          <Dropdown.Item>新港</Dropdown.Item>
-          <Dropdown.Item>大甲</Dropdown.Item>
+          <Dropdown.Item>Nature</Dropdown.Item>
+          <Dropdown.Item>Postcard</Dropdown.Item>
+          <Dropdown.Item>People</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 

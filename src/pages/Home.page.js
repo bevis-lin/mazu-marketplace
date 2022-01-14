@@ -29,7 +29,8 @@ export default function Home() {
             {/* <Image src="/images/yangba/180421657_153077426821965_6503564742629607052_n.jpeg" /> */}
             <Image src="/flow-flow-logo.svg" size="tiny" />
             <Header as="h1" inverted color="grey">
-              Mazu Photography NFT
+              Sentimen <br />
+              Photography NFT
             </Header>
             {!loggedIn ? (
               <Button

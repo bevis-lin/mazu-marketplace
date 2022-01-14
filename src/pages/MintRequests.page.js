@@ -38,7 +38,6 @@ export default function MintRequests() {
         <Table.Cell>
           {creatorTemplates.find((t) => t?.id === request.templateId).name}
         </Table.Cell>
-        <Table.Cell>{request.price}</Table.Cell>
         <Table.Cell>
           {request.completed ? 'Completed' : 'Processing'}
         </Table.Cell>
@@ -52,7 +51,6 @@ export default function MintRequests() {
         <Table.Row>
           <Table.HeaderCell>Id</Table.HeaderCell>
           <Table.HeaderCell>Template</Table.HeaderCell>
-          <Table.HeaderCell>Price</Table.HeaderCell>
           <Table.HeaderCell>Status</Table.HeaderCell>
         </Table.Row>
       </Table.Header>

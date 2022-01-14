@@ -1,15 +1,23 @@
 import React from 'react';
 import { useUser } from '../providers/UserProvider';
+import { useNavigate } from 'react-router-dom';
 
 import { Table, Image, Button } from 'semantic-ui-react';
 
 export default function Template({ sentimeTemplate }) {
   const { createMintRequest } = useUser();
+  const history = useNavigate();
   const { id, name, description, imageURL, totalSupply, totalMinted } =
     sentimeTemplate;
 
   //console.log('in template');
   //console.log(sentimeTemplate);
+
+  const onCreateMintRequest = () => {
+    createMintRequest(id).then(() => {
+      history('/creator/requests');
+    });
+  };
 
   return (
     <Table.Row>
@@ -22,7 +30,7 @@ export default function Template({ sentimeTemplate }) {
       </Table.Cell>
       <Table.Cell>{totalMinted}</Table.Cell>
       <Table.Cell>
-        <Button onClick={() => createMintRequest(id, 0.0001)}>+</Button>
+        <Button onClick={() => onCreateMintRequest()}>+</Button>
       </Table.Cell>
     </Table.Row>
   );

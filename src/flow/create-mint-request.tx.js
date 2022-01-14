@@ -1,7 +1,7 @@
 export const CREATE_MINT_REQUEST = `
 import SentimenMintRequest from 0xMintRequest
 
-transaction(templateId:UInt64, price:UFix64) {
+transaction(templateId:UInt64) {
 
   let creator: Address
 
@@ -10,6 +10,6 @@ transaction(templateId:UInt64, price:UFix64) {
   }
 
   execute{
-    SentimenMintRequest.addRequest(creator: self.creator, templateId:templateId ,price:price)
+    SentimenMintRequest.addRequest(creator: self.creator, templateId:templateId)
   }
 }`;

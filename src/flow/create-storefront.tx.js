@@ -1,6 +1,6 @@
 export const CREATE_STOREFRONT = `
 import FungibleToken from 0xFungibleToken
-import FlowToken from 0x7e60df042a9c0868
+import FlowToken from 0xFlowToken
 import NonFungibleToken from 0xNoneFungibleToken
 import NFTStorefront from 0xNFTStorefront
 import Sentimen from 0xSentimen

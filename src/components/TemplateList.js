@@ -3,8 +3,8 @@ import Template from './Template';
 import { Table } from 'semantic-ui-react';
 
 export default function TemplateList({ templates }) {
-  //console.log('in template list');
-  //console.log(templates);
+  console.log('in template list');
+  console.log(templates);
 
   const getTemplateList = (templates) => {
     return templates.map((template, i) => (

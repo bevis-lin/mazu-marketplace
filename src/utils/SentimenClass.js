@@ -19,7 +19,7 @@ class SentimenClass {
     if (!element.metadata) {
       let sentimenInstance = new SentimenClass(
         element.sentimenId,
-        element.cardID, //template id
+        element.templateId, //template id
         element.name,
         element.description,
         element.imageUrl,
@@ -30,7 +30,7 @@ class SentimenClass {
     } else {
       let sentimenInstance = new SentimenClass(
         element.metadata.sentimenId,
-        element.metadata.cardID, //template id
+        element.metadata.templateId, //template id
         element.metadata.name,
         element.metadata.description,
         element.metadata.imageUrl,

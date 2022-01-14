@@ -6,7 +6,8 @@ import '../config/config';
 import { Button, Divider, Header, Segment } from 'semantic-ui-react';
 
 export default function UserCollection() {
-  const { hasCollection, createCollection } = useUserCollection();
+  const { hasCollection, createCollection, deleteCollection } =
+    useUserCollection();
   const { userSentimens } = useUser();
 
   return (
@@ -20,6 +21,9 @@ export default function UserCollection() {
           <Header size="huge">Your collected NFTs</Header>
           <Divider />
           <SentimenList sentimens={userSentimens} />
+          <Button inverted color="red" onClick={() => deleteCollection()}>
+            Delete Collection
+          </Button>
         </Segment>
       )}
     </div>
