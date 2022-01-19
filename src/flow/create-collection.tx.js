@@ -1,5 +1,5 @@
 export const CREATE_COLLECTION = `
-import NonFungibleToken from 0xNoneFungibleToken
+import NonFungibleToken from 0xNonFungibleToken
 import Sentimen from 0xSentimen
 import SentimenPack from 0xPack
 

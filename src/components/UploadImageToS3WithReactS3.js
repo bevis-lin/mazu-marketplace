@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { uploadFile } from 'react-s3';
-import { Container } from 'semantic-ui-react';
+import { Container, Input, Button, Image, Divider } from 'semantic-ui-react';
 
 const S3_BUCKET = 'mazu-nft';
 const DIR_NAME = 'sentimen_photo';
@@ -18,6 +18,7 @@ const config = {
 
 const UploadImageToS3WithReactS3 = ({ fileUploadedListener }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadedPath, setUploadedPath] = useState(null);
 
   const handleFileInput = (e) => {
     console.log(ACCESS_KEY);
@@ -29,19 +30,22 @@ const UploadImageToS3WithReactS3 = ({ fileUploadedListener }) => {
     uploadFile(file, config)
       .then((data) => {
         console.log(data);
+        setUploadedPath(data.location);
         fileUploadedListener(data);
       })
       .catch((err) => console.error(err));
   };
 
   return (
-    <div>
-      <br />
-      <Container>
-        <input label="Select Image" type="file" onChange={handleFileInput} />
-        <button onClick={() => handleUpload(selectedFile)}>Upload</button>
-      </Container>
-    </div>
+    <Container textAlign="left">
+      <Input type="file" fluid onChange={handleFileInput} />
+      <Divider hidden />
+      {uploadedPath ? <Image src={uploadedPath} size="medium" /> : ''}
+      <Divider hidden />
+      <Button inverted onClick={() => handleUpload(selectedFile)}>
+        Upload
+      </Button>
+    </Container>
   );
 };
 

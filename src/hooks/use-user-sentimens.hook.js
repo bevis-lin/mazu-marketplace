@@ -114,12 +114,13 @@ export default function useUserSentimens(getFLOWBalance) {
       //console.log(res.nftMetadatas);
       res.nftMetadatas.forEach((element) => {
         //console.log(element);
-        let sentimen = SentimenClass.SentimenFactoryForCollection(element);
+        let sentimen = SentimenClass.SentimenFactory(element);
         mappedSentimens.push(sentimen);
       });
 
       const newSentimen = mappedSentimens.find((s) => s?.id === sentimenId);
       dispatch({ type: 'ADD', payload: newSentimen });
+      console.log('new sentimen been added to user');
     } catch (err) {
       console.log(err);
     }

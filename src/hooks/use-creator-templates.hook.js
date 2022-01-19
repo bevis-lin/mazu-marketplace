@@ -9,6 +9,7 @@ import { CREATE_TEMPLATE } from '../flow/create-template.tx';
 import { CREATE_STOREFRONT } from '../flow/create-storefront.tx';
 import { CHECK_IS_CREATOR } from '../flow/check-is-creator.script';
 import { GET_CREATOR_PROFILE } from '../flow/get-creator-profile.script';
+import { GET_TEMPLATE_BY_ID } from '../flow/get-template-by-id.script';
 
 export default function useCreatorTemplates() {
   const [isCreator, setIsCreator] = useState(false);
@@ -70,7 +71,7 @@ export default function useCreatorTemplates() {
         args: (arg, t) => [arg(user?.addr, t.Address)],
       });
 
-      console.log(res);
+      //console.log(res);
 
       setCreator(res);
     } catch (err) {
@@ -94,6 +95,19 @@ export default function useCreatorTemplates() {
         console.log('getting creator profile...');
         getProfile();
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getTemplateById = async (templateId) => {
+    try {
+      let res = await query({
+        cadence: GET_TEMPLATE_BY_ID,
+        args: (arg, t) => [arg(templateId, t.UInt64)],
+      });
+
+      return res;
     } catch (err) {
       console.log(err);
     }
@@ -174,5 +188,6 @@ export default function useCreatorTemplates() {
     creator,
     createTemplate,
     enableStorefront,
+    getTemplateById,
   };
 }

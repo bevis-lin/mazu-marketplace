@@ -51,7 +51,7 @@ export default function useCollection() {
   const deleteCollection = async () => {
     let res = await mutate({
       cadence: DELETE_COLLECTION,
-      limit: 55,
+      limit: 1000,
     });
     addTx(res);
     await tx(res).onceSealed();

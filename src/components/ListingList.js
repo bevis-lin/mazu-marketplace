@@ -1,6 +1,6 @@
 import React from 'react';
 import Listing from './Listing';
-import { Card, Container } from 'semantic-ui-react';
+import { Card, Container, Header } from 'semantic-ui-react';
 
 export default function ListingList({ listings }) {
   //console.log(listings);
@@ -11,7 +11,13 @@ export default function ListingList({ listings }) {
 
   return (
     <Container>
-      <Card.Group itemsPerRow={3}>{getListingList(listings)}</Card.Group>
+      {listings.length > 0 ? (
+        <Card.Group itemsPerRow={3}>{getListingList(listings)}</Card.Group>
+      ) : (
+        <Header inverted textAlign="left">
+          Currently no sale for this collection.
+        </Header>
+      )}
     </Container>
   );
 }

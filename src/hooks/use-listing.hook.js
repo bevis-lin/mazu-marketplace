@@ -3,11 +3,13 @@ import { mutate, query, tx } from '@onflow/fcl';
 import { useTxs } from '../providers/TxProvider';
 import { CHECK_IS_SENTIMEN_LISTED } from '../flow/check-is-sentimen-listed.script';
 import { CREATE_STOREFRONT_LISTING } from '../flow/create-storefront-listing.tx';
+import { DELETE_STORERONT } from '../flow/delete-listing.tx';
 import { GET_LISTINGS } from '../flow/get-listings.script';
 import { GET_LISTINGS_BY_ACTIVITY } from '../flow/get-listings-by-activity.script';
 import { listingReducer } from '../reducer/listingReducer';
 import ListingClass from '../utils/ListingClass';
 import { useParams } from 'react-router-dom';
+import { DELETE_COLLECTION } from '../flow/delete-collection.tx';
 
 export default function useListings() {
   const { addTx, runningTxs } = useTxs();
@@ -17,7 +19,7 @@ export default function useListings() {
     data: [],
   });
 
-  const { activityID } = useParams();
+  const { collectionId } = useParams();
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -26,11 +28,11 @@ export default function useListings() {
       try {
         var res;
 
-        if (activityID) {
+        if (collectionId) {
           res = await query({
             cadence: GET_LISTINGS_BY_ACTIVITY,
             args: (arg, t) => [
-              arg(parseInt(activityID), t.UInt),
+              arg(parseInt(collectionId), t.UInt),
               arg(0, t.Int),
               arg(10, t.Int),
             ],
@@ -58,7 +60,7 @@ export default function useListings() {
     };
 
     fetchListings();
-  }, [activityID]);
+  }, [collectionId]);
 
   const createStorefrontListing = async (nftId, salePrice, activityId) => {
     console.log('about to createStorefrontListing...');
@@ -71,18 +73,44 @@ export default function useListings() {
 
     try {
       var res;
+      var parSalePrice = parseFloat(salePrice);
+      console.log(`Sale Price:${parSalePrice.toFixed(6)}`);
       res = await mutate({
         cadence: CREATE_STOREFRONT_LISTING,
         limit: 1000,
         args: (arg, t) => [
           arg(nftId, t.UInt64),
-          arg(salePrice, t.UFix64),
+          arg(parSalePrice.toFixed(6), t.UFix64),
           arg(activityId, t.UInt),
         ],
       });
       addTx(res);
       await tx(res).onceSealed();
       //setListed(checkIsListedOnStorefront(nftId));
+    } catch (err) {
+      console.log(err);
+      alert(err);
+    }
+  };
+
+  const deleteStorefrontListing = async (nftId) => {
+    console.log(`about to delete storefront listing id:${nftId}`);
+    if (runningTxs) {
+      alert(
+        'Transactions are still running. Please wait for them to finish first.'
+      );
+      return;
+    }
+
+    try {
+      var res;
+      res = await mutate({
+        cadence: DELETE_STORERONT,
+        limit: 1000,
+        args: (arg, t) => [arg(nftId, t.UInt64)],
+      });
+      addTx(res);
+      await tx(res).onceSealed();
     } catch (err) {
       console.log(err);
       alert(err);
@@ -107,5 +135,6 @@ export default function useListings() {
     ...state,
     createStorefrontListing,
     checkIsListedOnStorefront,
+    deleteStorefrontListing,
   };
 }

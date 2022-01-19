@@ -1,6 +1,6 @@
 export const CREATE_STOREFRONT_LISTING = `
 import FungibleToken from 0xFungibleToken
-import NonFungibleToken from 0xNoneFungibleToken
+import NonFungibleToken from 0xNonFungibleToken
 import NFTStorefront from 0xNFTStorefront
 import Marketplace from 0xMarketplace
 import FlowToken from 0xFlowToken

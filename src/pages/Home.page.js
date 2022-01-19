@@ -47,7 +47,7 @@ export default function Home() {
           </Grid.Column>
           <Grid.Column textAlign="center" verticalAlign="middle">
             {/* <Image src="/images/yangba/180847975_153077556821952_1022103781139480060_n.jpeg" /> */}
-            <Link to="/activity/1/listings">
+            <Link to="/listing/collection/1">
               <Button inverted size="huge" color="red">
                 北 港
               </Button>

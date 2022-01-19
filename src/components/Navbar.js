@@ -70,12 +70,18 @@ export default function Navbar() {
       </Menu.Item>
       <Dropdown text="Collection" pointing className="link item">
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => history('/activity/1/listings')}>
+          <Dropdown.Item onClick={() => history('/listing/collection/1')}>
             Mazu
           </Dropdown.Item>
-          <Dropdown.Item>Nature</Dropdown.Item>
-          <Dropdown.Item>Postcard</Dropdown.Item>
-          <Dropdown.Item>People</Dropdown.Item>
+          <Dropdown.Item onClick={() => history('/listing/collection/2')}>
+            Hiking
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => history('/listing/collection/3')}>
+            Plant
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => history('/listing/collection/4')}>
+            People
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 

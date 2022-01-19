@@ -1,13 +1,29 @@
 import React, { useEffect } from 'react';
 import useListings from '../hooks/use-listing.hook';
-import { Image, Button, Card, Icon, Modal, Form } from 'semantic-ui-react';
+import useCreatorTemplates from '../hooks/use-creator-templates.hook';
+import {
+  Image,
+  Button,
+  Card,
+  Icon,
+  Modal,
+  Form,
+  Divider,
+  Label,
+} from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
 
-export default function Sentimen({ sentimen }) {
-  const { checkIsListedOnStorefront, createStorefrontListing } = useListings();
+export default function Sentimen({ sentimen, isFromUserCollection }) {
+  const {
+    checkIsListedOnStorefront,
+    createStorefrontListing,
+    deleteStorefrontListing,
+  } = useListings();
+  const { getTemplateById } = useCreatorTemplates();
   const [open, setOpen] = React.useState(false);
   const [listed, setListed] = useState(false);
-  const [listPrice, setListPrice] = useState(0.1);
+  const [listPrice, setListPrice] = useState(1);
+  const [siteId, setSiteId] = useState(1);
 
   const { id, title, description, imageURL, activity, creator } = sentimen;
 
@@ -16,13 +32,26 @@ export default function Sentimen({ sentimen }) {
       checkIsListedOnStorefront(sentimen).then((value) => {
         setListed(value);
       });
+
+      getTemplateById(sentimen.templateId).then((value) => {
+        //console.log(value);
+        setSiteId(parseInt(value.siteId));
+      });
     }
   }, []);
 
   const doListSale = async (event) => {
     event.preventDefault();
 
-    await createStorefrontListing(id, listPrice, 1);
+    await createStorefrontListing(id, listPrice, siteId);
+
+    checkIsListedOnStorefront(sentimen).then((value) => {
+      setListed(value);
+    });
+  };
+
+  const doDelistSale = async () => {
+    await deleteStorefrontListing(id);
 
     checkIsListedOnStorefront(sentimen).then((value) => {
       setListed(value);
@@ -49,20 +78,6 @@ export default function Sentimen({ sentimen }) {
             <Image size="large" src={imageURL} />
             <Modal.Description>
               <p>{description}</p>
-              {!listed ? (
-                <Form size="tiny" onSubmit={doListSale}>
-                  <Form.Field>
-                    <label>List Price</label>
-                    <input
-                      value={listPrice}
-                      onChange={(e) => setListPrice(e.target.value)}
-                    />
-                  </Form.Field>
-                  <Button type="submit">Sale</Button>
-                </Form>
-              ) : (
-                ''
-              )}
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
@@ -77,7 +92,33 @@ export default function Sentimen({ sentimen }) {
         <Card.Meta>
           <Icon name="user circle" /> {creator}
         </Card.Meta>
-        {!listed ? <Card.Meta>Not listed</Card.Meta> : ''}
+        <Card.Meta>
+          <Divider hidden />
+        </Card.Meta>
+        {!listed ? (
+          <Card.Meta textAlign="left">
+            <Form size="tiny" onSubmit={doListSale} fluid>
+              <Form.Group widths="equal">
+                <Image src="/Flow.png" size="mini" />
+                <Form.Input
+                  value={listPrice}
+                  onChange={(e) => setListPrice(e.target.value)}
+                />
+                <Button type="submit" inverted color="blue">
+                  Sale
+                </Button>
+              </Form.Group>
+            </Form>
+          </Card.Meta>
+        ) : isFromUserCollection ? (
+          <Card.Meta textAlign="left">
+            <Button onClick={() => doDelistSale()} fluid inverted color="blue">
+              Delisting
+            </Button>
+          </Card.Meta>
+        ) : (
+          ''
+        )}
       </Card.Content>
     </Card>
   );

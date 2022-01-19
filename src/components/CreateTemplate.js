@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
+import { Divider, Header, Input } from 'semantic-ui-react';
 import { useState } from 'react';
 import { useUser } from '../providers/UserProvider';
 import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 import UploadImageToS3WithReactS3 from '../components/UploadImageToS3WithReactS3';
-import { Button, Container, Form, TextArea } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Radio,
+  Form,
+  TextArea,
+  Select,
+} from 'semantic-ui-react';
 
 export default function CreateTemplate({ onCreatedHandler }) {
   const { creator } = useUser();
@@ -13,7 +21,7 @@ export default function CreateTemplate({ onCreatedHandler }) {
   const [description, setDescription] = useState(
     'Short introduction for your NFT'
   );
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('fdfdfdffd');
   const [siteId, setSiteId] = useState('1');
   const [activity, setActivity] = useState('');
   const [creatorName, setCreatorName] = useState('');
@@ -45,8 +53,34 @@ export default function CreateTemplate({ onCreatedHandler }) {
     }
   }, [creator]);
 
+  const collectionOptions = [
+    { key: '1', value: '1', text: 'Mazu' },
+    { key: '2', value: '2', text: 'Hiking' },
+    { key: '3', value: '3', text: 'Plant' },
+    { key: '4', value: '4', text: 'People' },
+  ];
+
+  const handleOnChange = (e, data) => {
+    setSiteId(data.value);
+  };
+
+  const copyUrl = (e) => {
+    e.preventDefault();
+    var textBox = document.getElementById('url');
+    textBox.select();
+    //alert(textBox.value);
+    document.execCommand('copy');
+  };
+
   return (
     <Container textAlign="left">
+      <Header inverted size="huge">
+        Create New Template
+      </Header>
+      <Divider />
+      <Header inverted size="large">
+        Metadata
+      </Header>
       <Form inverted size="tiny" onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Field>
@@ -74,34 +108,43 @@ export default function CreateTemplate({ onCreatedHandler }) {
         </Form.Field>
         <Form.Field>
           <label>Activity</label>
-          <input
-            value={activity}
-            onChange={(e) => setActivity(e.target.value)}
-          />
+          <input value={activity} onChange={(e) => setActivity(e)} />
         </Form.Field>
         <Form.Field>
           <label>Creator</label>
-          <input
-            value={creatorName}
-            onChange={(e) => setCreatorName(e.target.value)}
-          />
+          <input value={creatorName} onChange={(e) => setCreatorName(e)} />
         </Form.Field>
 
-        <Form.Input
-          fluid
-          label="URL of the uploaded image"
-          value={imageUrl}
-          readonly
-        />
+        <Form.Group widths="equal">
+          <Form.Input
+            fluid
+            id="url"
+            action={{ icon: 'copy', onClick: (e) => copyUrl(e) }}
+            label="URL of the uploaded image"
+            value={imageUrl}
+            readonly
+          />
+        </Form.Group>
 
         <Form.Field>
           <label>Collection</label>
-          <input value={siteId} readOnly />
+          <Select
+            placeholder="Select Collection"
+            options={collectionOptions}
+            onChange={handleOnChange}
+          ></Select>
         </Form.Field>
 
-        <Button type="submit">Submit</Button>
+        <Divider hidden />
+        <Button inverted type="submit">
+          Submit
+        </Button>
       </Form>
 
+      <Divider />
+      <Header inverted size="large">
+        Image Upload
+      </Header>
       <UploadImageToS3WithReactS3
         fileUploadedListener={onFileUploadedListener}
       />

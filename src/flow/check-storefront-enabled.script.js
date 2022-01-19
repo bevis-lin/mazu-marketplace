@@ -1,7 +1,7 @@
 export const CHCECK_STOREFRONT_ENABLED = `
 import FungibleToken from 0xFungibleToken
 import FlowToken from 0xFlowToken
-import NonFungibleToken from 0xNoneFungibleToken
+import NonFungibleToken from 0xNonFungibleToken
 import NFTStorefront from 0xNFTStorefront
 import Sentimen from 0xSentimen
 

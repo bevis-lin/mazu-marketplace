@@ -11,16 +11,9 @@ import CreatorProfile from '../pages/CreatorProfile.page';
 export const ROUTES = [
   { name: 'Home', path: '/', component: <Home />, nav: false },
   {
-    name: 'ActivityListings',
-    path: '/activity/:activityID/listings',
+    name: 'Listings',
+    path: '/listing/collection/:collectionId',
     component: <Listings />,
-    nav: false,
-  },
-  { name: 'Listings', path: '/listings', component: <Listings />, nav: false },
-  {
-    name: 'Listing',
-    path: '/listings/:listingID',
-    component: <Listing />,
     nav: false,
   },
   {

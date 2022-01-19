@@ -13,6 +13,6 @@ config({
   '0xCreator': process.env.REACT_APP_SENTIMENCREATOR_CONTRACT,
   '0xTemplate': process.env.REACT_APP_SENTIMENTEMPLATE_CONTRACT,
   '0xMintRequest': process.env.REACT_APP_SENTIMENMINTREQUEST_CONTRACT,
-  '0xNoneFungibleToken': process.env.REACT_APP_NONEFUNGIBLETOKEN_CONTRACT,
+  '0xNonFungibleToken': process.env.REACT_APP_NONFUNGIBLETOKEN_CONTRACT,
   '0xFlowToken': process.env.REACT_APP_FLOWTOKEN_CONTRACT,
 });
