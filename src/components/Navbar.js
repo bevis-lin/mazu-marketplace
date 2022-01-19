@@ -58,7 +58,7 @@ export default function Navbar() {
   };
 
   return (
-    <Menu fixed="top" inverted size="huge">
+    <Menu inverted size="huge" stackable>
       <Menu.Item as="a" header onClick={() => history('/')}>
         {/* <Image
           size="mini"
@@ -66,7 +66,7 @@ export default function Navbar() {
           style={{ marginRight: '1.5em' }}
           onClick={() => history.push('/')}
         /> */}
-        Sentimen.Art
+        Sentimen
       </Menu.Item>
       <Dropdown text="Collection" pointing className="link item">
         <Dropdown.Menu>
