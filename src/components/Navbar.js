@@ -8,7 +8,7 @@ import Wallet from './AccountDetails';
 import { Menu, Dropdown } from 'semantic-ui-react';
 
 export default function Navbar() {
-  const { user, loggedIn } = useAuth();
+  const { user, loggedIn, logIn } = useAuth();
   const { isCreator, getFLOWBalance } = useUser();
   const history = useNavigate();
 
@@ -54,11 +54,17 @@ export default function Navbar() {
           )}
         </Menu.Menu>
       );
+    } else {
+      return (
+        <Menu.Item position="right" onClick={() => logIn()}>
+          Connect Wallet
+        </Menu.Item>
+      );
     }
   };
 
   return (
-    <Menu inverted size="huge" stackable>
+    <Menu inverted size="massive" stackable>
       <Menu.Item as="a" header onClick={() => history('/')}>
         {/* <Image
           size="mini"
