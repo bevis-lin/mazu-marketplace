@@ -42,5 +42,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://mazu-nft.s3.amazonaws.com/"
+  "proxy": "https://mazu-nft.s3.amazonaws.com/",
+  "engines": {
+    "npm": "6.14.15"
+  }
 }
