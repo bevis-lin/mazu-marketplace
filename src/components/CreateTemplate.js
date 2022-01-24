@@ -108,11 +108,17 @@ export default function CreateTemplate({ onCreatedHandler }) {
         </Form.Field>
         <Form.Field>
           <label>Activity</label>
-          <input value={activity} onChange={(e) => setActivity(e)} />
+          <input
+            value={activity}
+            onChange={(e) => setActivity(e.target.value)}
+          />
         </Form.Field>
         <Form.Field>
           <label>Creator</label>
-          <input value={creatorName} onChange={(e) => setCreatorName(e)} />
+          <input
+            value={creatorName}
+            onChange={(e) => setCreatorName(e.target.value)}
+          />
         </Form.Field>
 
         <Form.Group widths="equal">
