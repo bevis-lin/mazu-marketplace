@@ -102,6 +102,7 @@ export default function useCreatorTemplates() {
 
   const getTemplateById = async (templateId) => {
     try {
+      console.log(`get_template_by_id:id=${templateId}`);
       let res = await query({
         cadence: GET_TEMPLATE_BY_ID,
         args: (arg, t) => [arg(templateId, t.UInt64)],

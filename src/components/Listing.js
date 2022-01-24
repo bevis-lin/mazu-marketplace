@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useUser } from '../providers/UserProvider';
 import { useAuth } from '../providers/AuthProvider';
-import { Button, Card, Image, Label } from 'semantic-ui-react';
+import { Button, Card, Divider, Header, Image, Label } from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
 import Sentimen from './Sentimen';
+import { useNavigate } from 'react-router-dom';
 
 export default function Listing({ listing }) {
   const [owned, setOwned] = useState(false);
@@ -11,6 +12,7 @@ export default function Listing({ listing }) {
   const { loggedIn } = useAuth();
   const { listingId, listingAddress, salePrice, sentimenId, sentimen } =
     listing;
+  const history = useNavigate();
 
   useEffect(() => {
     console.log(listing);
@@ -45,24 +47,14 @@ export default function Listing({ listing }) {
   };
 
   return (
-    <Card fluid>
+    <Card fluid onClick={() => history(`/nft/${sentimen.id}`)}>
       <Sentimen sentimen={sentimen} isFromUserCollection={false} />
 
       <Card.Content extra textAlign="left">
-        {owned ? (
-          <Label as="a" color="teal" ribbon>
-            You Own
-          </Label>
-        ) : (
-          ''
-        )}
-        <Card.Meta>
-          <Label image>
-            <img src="/Flow.png" />
-
-            {salePrice}
-          </Label>
+        <Card.Meta textAlign="right">
+          <Header>{parseFloat(salePrice).toFixed(2)} FLOW</Header>
         </Card.Meta>
+        <Divider hidden />
         <Card.Meta textAlign="right">
           {loggedIn && !owned ? (
             <Button onClick={() => onPurchaseSentimen()}>Buy</Button>
@@ -70,6 +62,14 @@ export default function Listing({ listing }) {
             ''
           )}
         </Card.Meta>
+
+        {owned ? (
+          <Label as="a" color="teal" ribbon>
+            You Own
+          </Label>
+        ) : (
+          ''
+        )}
       </Card.Content>
     </Card>
   );
