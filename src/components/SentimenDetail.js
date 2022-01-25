@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 import { useNavigate } from 'react-router-dom';
 import SentimenClass from '../utils/SentimenClass';
+import useUserSentimens from '../hooks/use-user-sentimens.hook';
+import { useAuth } from '../providers/AuthProvider';
 import {
   Container,
   Divider,
@@ -27,6 +29,9 @@ export default function SentimenDetail() {
   const [listPrice, setListPrice] = useState(1);
   const [siteId, setSiteId] = useState(1);
   const [sentimen, setSentimen] = useState(null);
+  const [isOwnerCorret, setIsOwnerCorret] = useState(false);
+  const { getUserSentimens } = useUserSentimens();
+  const { user } = useAuth();
   const history = useNavigate();
 
   const {
@@ -42,6 +47,9 @@ export default function SentimenDetail() {
     if (!sentimen) {
       get_metadata(nftID);
     } else {
+      console.log('checking owner...');
+      checkOwner();
+
       console.log(`checking if nft id:${sentimen.id} is listed...`);
       checkIsListedOnStorefront(sentimen).then((value) => {
         setListed(value);
@@ -94,10 +102,21 @@ export default function SentimenDetail() {
     });
   };
 
+  const checkOwner = async () => {
+    getUserSentimens(user?.addr).then((result) => {
+      if (result) {
+        var sentimenTemp = result.find((element) => element.id == nftID);
+        if (sentimenTemp) {
+          setIsOwnerCorret(true);
+        }
+      }
+    });
+  };
+
   return (
     <Container>
       <Segment>
-        {sentimen ? (
+        {sentimen && isOwnerCorret ? (
           <Grid stackable>
             <Grid.Column width={7}>
               <Modal
@@ -173,7 +192,9 @@ export default function SentimenDetail() {
             </Grid.Column>
           </Grid>
         ) : (
-          'Sentimen NFT Viwer'
+          <Header as="h1">
+            {!isOwnerCorret ? `Checking owner address...` : 'Loading NFT...'}
+          </Header>
         )}
       </Segment>
       <Divider hidden />
