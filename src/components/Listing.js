@@ -47,7 +47,10 @@ export default function Listing({ listing }) {
   };
 
   return (
-    <Card fluid onClick={() => history(`/nft/${sentimen.id}`)}>
+    <Card
+      fluid
+      onClick={() => history(`/nft/${sentimen.id}/${listingAddress}`)}
+    >
       <Sentimen sentimen={sentimen} isFromUserCollection={false} />
 
       <Card.Content extra textAlign="left">

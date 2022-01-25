@@ -28,28 +28,36 @@ export default function useUserSentimens(getFLOWBalance) {
       dispatch({ type: 'PROCESSING' });
 
       try {
-        var res;
-
-        res = await query({
-          cadence: GET_USER_COLLECTION,
-          args: (arg, t) => [arg(user?.addr, t.Address)],
+        getUserSentimens(user?.addr).then((result) => {
+          dispatch({ type: 'SUCCESS', payload: result });
         });
-
-        let mappedSentimens = [];
-
-        console.log(res);
-        console.log(res.nftMetadatas);
-        res.nftMetadatas.forEach((element) => {
-          //console.log(element);
-          let sentimen = SentimenClass.SentimenFactory(element);
-          mappedSentimens.push(sentimen);
-        });
-
-        dispatch({ type: 'SUCCESS', payload: mappedSentimens });
       } catch (err) {
-        console.log(err);
         dispatch({ type: 'ERROR' });
       }
+
+      // try {
+      //   var res;
+
+      //   res = await query({
+      //     cadence: GET_USER_COLLECTION,
+      //     args: (arg, t) => [arg(user?.addr, t.Address)],
+      //   });
+
+      //   let mappedSentimens = [];
+
+      //   console.log(res);
+      //   console.log(res.nftMetadatas);
+      //   res.nftMetadatas.forEach((element) => {
+      //     //console.log(element);
+      //     let sentimen = SentimenClass.SentimenFactory(element);
+      //     mappedSentimens.push(sentimen);
+      //   });
+
+      //   dispatch({ type: 'SUCCESS', payload: mappedSentimens });
+      // } catch (err) {
+      //   console.log(err);
+      //   dispatch({ type: 'ERROR' });
+      // }
     };
 
     if (loggedIn) {
@@ -60,6 +68,36 @@ export default function useUserSentimens(getFLOWBalance) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
+
+  const getUserSentimens = async (owner) => {
+    //console.log(user?.addr);
+    console.log(
+      `begin to get user ${owner} sentimens in user-sentimen hook useEffect...`
+    );
+
+    try {
+      var res;
+
+      res = await query({
+        cadence: GET_USER_COLLECTION,
+        args: (arg, t) => [arg(owner, t.Address)],
+      });
+
+      let mappedSentimens = [];
+
+      console.log(res);
+      console.log(res.nftMetadatas);
+      res.nftMetadatas.forEach((element) => {
+        //console.log(element);
+        let sentimen = SentimenClass.SentimenFactory(element);
+        mappedSentimens.push(sentimen);
+      });
+
+      return mappedSentimens;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const purchaseSentimen = async (
     sentimenId,
@@ -130,5 +168,6 @@ export default function useUserSentimens(getFLOWBalance) {
     ...state,
     purchaseSentimen,
     addSentimen,
+    getUserSentimens,
   };
 }

@@ -28,7 +28,12 @@ export const ROUTES = [
     component: <Templates />,
     nav: false,
   },
-  { name: 'ViewNFT', path: '/nft/:nftID', component: <ViewNFT />, nav: false },
+  {
+    name: 'ViewNFT',
+    path: '/nft/:nftID/:owner',
+    component: <ViewNFT />,
+    nav: false,
+  },
   {
     name: 'NewTemplate',
     path: '/creator/templates/create',

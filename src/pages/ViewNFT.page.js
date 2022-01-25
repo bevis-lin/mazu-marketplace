@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { query } from '@onflow/fcl';
 import { GET_NFT_METADATA } from '../flow/get-nft-metadata.script';
 import SentimenClass from '../utils/SentimenClass';
+import useUserSentimens from '../hooks/use-user-sentimens.hook';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -20,9 +21,12 @@ import {
 export default function ViewNFT() {
   const [sentimen, setSentimen] = useState(null);
   const [open, setOpen] = useState(false);
+  const [isOwnerCorret, setIsOwnerCorret] = useState(false);
   const history = useNavigate();
+  const { getUserSentimens } = useUserSentimens();
 
   const { nftID } = useParams();
+  const { owner } = useParams();
 
   useEffect(() => {
     const get_metadata = async (nftId) => {
@@ -45,10 +49,24 @@ export default function ViewNFT() {
     };
 
     console.log(`View NFT ID:${nftID}`);
-    if (nftID) {
+    if (!isOwnerCorret) {
+      checkOwner();
+    }
+    if (isOwnerCorret) {
       get_metadata(nftID);
     }
-  }, [nftID]);
+  }, [nftID, isOwnerCorret]);
+
+  const checkOwner = async () => {
+    getUserSentimens(owner).then((result) => {
+      if (result) {
+        var sentimenTemp = result.find((element) => element.id == nftID);
+        if (sentimenTemp) {
+          setIsOwnerCorret(true);
+        }
+      }
+    });
+  };
 
   return (
     <Container>
@@ -88,7 +106,7 @@ export default function ViewNFT() {
               <Header as="h4">Owner</Header>
               <Label>
                 <Icon name="user" size="large" />
-                <b>0x8f69d9adfd83edee</b>
+                <b>{owner}</b>
               </Label>
               <Header as="h4">Activity</Header>
               <Label>
@@ -103,7 +121,9 @@ export default function ViewNFT() {
             </Grid.Column>
           </Grid>
         ) : (
-          'Sentimen NFT Viwer'
+          <Header as="h1">
+            {!isOwnerCorret ? `Checking owner address...` : 'Loading NFT...'}
+          </Header>
         )}
       </Segment>
       <Divider hidden />
