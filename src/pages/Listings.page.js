@@ -4,7 +4,7 @@ import useListings from '../hooks/use-listing.hook';
 import ListingList from '../components/ListingList';
 import ErrorLoadingRenderer from '../components/ErrorLoadingRenderer';
 import '../config/config';
-import { Container, Divider, Header, Image, Segment } from 'semantic-ui-react';
+import { Container, Divider, Header } from 'semantic-ui-react';
 
 export default function Listings() {
   const { loading, error, data: listings } = useListings();

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useUser } from '../providers/UserProvider';
 import { useAuth } from '../providers/AuthProvider';
-import { Button, Card, Divider, Header, Image, Label } from 'semantic-ui-react';
+import { Button, Card, Divider, Header, Label } from 'semantic-ui-react';
 import { useState } from 'react/cjs/react.development';
 import Sentimen from './Sentimen';
 import { useNavigate } from 'react-router-dom';

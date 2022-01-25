@@ -1,6 +1,5 @@
 import Home from '../pages/Home.page';
 import Listings from '../pages/Listings.page';
-import Listing from '../pages/Listing.page';
 import UserCollection from '../pages/UserCollection.page';
 import Templates from '../pages/Templates.page';
 import ViewNFT from '../pages/ViewNFT.page';

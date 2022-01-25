@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { Divider, Header, Input } from 'semantic-ui-react';
 import { useState } from 'react';
 import { useUser } from '../providers/UserProvider';
 import useCreatorTemplates from '../hooks/use-creator-templates.hook';
 import UploadImageToS3WithReactS3 from '../components/UploadImageToS3WithReactS3';
 import {
+  Divider,
+  Header,
   Button,
   Container,
-  Radio,
   Form,
   TextArea,
   Select,

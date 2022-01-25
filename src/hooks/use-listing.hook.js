@@ -9,7 +9,6 @@ import { GET_LISTINGS_BY_ACTIVITY } from '../flow/get-listings-by-activity.scrip
 import { listingReducer } from '../reducer/listingReducer';
 import ListingClass from '../utils/ListingClass';
 import { useParams } from 'react-router-dom';
-import { DELETE_COLLECTION } from '../flow/delete-collection.tx';
 
 export default function useListings() {
   const { addTx, runningTxs } = useTxs();

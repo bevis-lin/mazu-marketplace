@@ -1,22 +1,10 @@
 import React from 'react';
 import { createMedia } from '@artsy/fresnel';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../providers/AuthProvider';
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Image,
-  Segment,
-} from 'semantic-ui-react';
+import { Grid, Header, Image } from 'semantic-ui-react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
 export default function Home() {
-  const { loggedIn, logIn } = useAuth();
-
   const { MediaContextProvider, Media } = createMedia({
     // breakpoints values can be either strings or integers
     breakpoints: {

@@ -19,7 +19,6 @@ import {
   Modal,
   Button,
   Form,
-  Input,
 } from 'semantic-ui-react';
 
 export default function SentimenDetail() {
